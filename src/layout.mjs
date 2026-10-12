@@ -27,6 +27,8 @@ const ICONS = {
   pharma: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 15h9"/>',
   gears: '<circle cx="9" cy="9" r="2.5"/><path d="M9 3v2M9 13v2M3 9h2M13 9h2M4.8 4.8l1.4 1.4M11.8 11.8l1.4 1.4M4.8 13.2l1.4-1.4M11.8 6.2l1.4-1.4"/><circle cx="17" cy="17" r="2"/><path d="M17 13v1.5M17 19.5V21M13 17h1.5M19.5 17H21"/>',
   rig: '<path d="M8 21 12 5l4 16M9.5 15h5M10.5 11h3M6 21h12"/><path d="M12 5V3M15 4c1-1 1-2 0-3 2 1 2.5 2.5 1.5 4"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
   wrench: '<path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5"/><path d="M14.5 6.5 17 4"/>',
 };
 
@@ -118,6 +120,7 @@ function footer() {
     ${company.gstin ? `<span>GSTIN: ${esc(company.gstin)}</span>` : ''}
   </div>
 </footer>
+<button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme" data-theme-toggle>${icon('moon', 'icon i-moon')}${icon('sun', 'icon i-sun')}</button>
 ${company.whatsapp ? `<a class="wa-float" href="https://wa.me/${esc(company.whatsapp)}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">${icon('chat')}</a>` : ''}`;
 }
 
@@ -177,6 +180,7 @@ export function layout({ path, title, description, body, bodyClass = '', noindex
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>(function(){var t;try{t=localStorage.getItem('asecon-theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)})();</script>
   <title>${esc(fullTitle)}</title>
   <meta name="description" content="${esc(description)}">
   ${noindex ? '<meta name="robots" content="noindex">' : '<meta name="robots" content="index, follow">'}

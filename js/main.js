@@ -2,6 +2,29 @@
 document.documentElement.classList.add('js');
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Light / dark theme toggle (choice remembered per browser; otherwise follows the OS)
+  const root = document.documentElement;
+  const themeBtn = document.querySelector('[data-theme-toggle]');
+  const syncThemeBtn = () => {
+    if (themeBtn) themeBtn.setAttribute('aria-label', root.getAttribute('data-theme') === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  };
+  syncThemeBtn();
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('asecon-theme', next); } catch (e) { /* storage unavailable */ }
+      syncThemeBtn();
+    });
+  }
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      let saved = null;
+      try { saved = localStorage.getItem('asecon-theme'); } catch (err) { /* ignore */ }
+      if (!saved) { root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); syncThemeBtn(); }
+    });
+  }
+
   // Sticky header shadow
   const header = document.querySelector('[data-header]');
   const onScroll = () => header && header.classList.toggle('scrolled', window.scrollY > 8);
