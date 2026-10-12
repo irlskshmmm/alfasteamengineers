@@ -71,33 +71,75 @@
         <li><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg> Engineering and components from one team</li>
       </ul>
     </div>
-    <div class="hero-gallery" aria-label="Steam system components">
-      
-      <figure class="tile tile-main">
-        <img src="/images/products/control-valves.webp" alt="Control valves" width="800" height="800" fetchpriority="high" decoding="async">
-        <figcaption>Control valves</figcaption>
-      </figure>
-      <figure class="tile ">
-        <img src="/images/products/steam-traps.webp" alt="Steam traps" width="800" height="800" loading="lazy" decoding="async">
-        <figcaption>Steam traps</figcaption>
-      </figure>
-      <figure class="tile ">
-        <img src="/images/products/pressure-gauges.webp" alt="Pressure gauges" width="800" height="800" loading="lazy" decoding="async">
-        <figcaption>Pressure gauges</figcaption>
-      </figure>
-      <figure class="tile ">
-        <img src="/images/products/globe-valves.webp" alt="Globe valves" width="800" height="800" loading="lazy" decoding="async">
-        <figcaption>Globe valves</figcaption>
-      </figure>
-      <figure class="tile ">
-        <img src="/images/products/float-steam-trap.webp" alt="Float traps" width="800" height="800" loading="lazy" decoding="async">
-        <figcaption>Float traps</figcaption>
-      </figure>
-      <figure class="tile ">
-        <img src="/images/products/boiler-tubes.webp" alt="Boiler tubes" width="800" height="800" loading="lazy" decoding="async">
-        <figcaption>Boiler tubes</figcaption>
-      </figure>
-    </div>
+    <div class="hero-visual">
+<svg class="loop-svg" viewBox="0 0 600 470" role="img" aria-labelledby="loop-title loop-desc">
+  <title id="loop-title">Steam system loop</title>
+  <desc id="loop-desc">Steam flows from the boiler through a pressure gauge, isolation valve and control valve to the process. Condensate drains through a steam trap, metering and the feed tank back to the boiler.</desc>
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="var(--grid-line)" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="600" height="470" fill="url(#grid)"/>
+
+  <g class="pipe">
+    <path d="M70 182V140Q70 110 100 110H500Q530 110 530 140V182"/>
+    <path d="M530 298V340Q530 370 500 370H100Q70 370 70 340V298"/>
+  </g>
+  <path class="flow flow-steam" d="M70 182V140Q70 110 100 110H500Q530 110 530 140V182"/>
+  <path class="flow flow-cond" d="M530 298V340Q530 370 500 370H100Q70 370 70 340V298"/>
+
+  <text x="300" y="196" class="lbl lbl-steam" text-anchor="middle">STEAM →</text>
+  <text x="300" y="296" class="lbl lbl-cond" text-anchor="middle">← CONDENSATE RETURN</text>
+  <g class="loop-core">
+    <circle cx="300" cy="246" r="26"/>
+    <path d="M300 226a20 20 0 1 1-19.6 24" />
+    <path d="m276 244 4.4 6.6 6.6-4.4"/>
+  </g>
+
+  <g class="node node-big" style="--d:0s">
+    <rect x="12" y="182" width="116" height="116" rx="16" class="node-card"/>
+    <image href="/images/products/boiler-tubes.webp" x="26" y="196" width="88" height="72" preserveAspectRatio="xMidYMid meet"/>
+    <text x="70" y="286" class="node-cap" text-anchor="middle">BOILER</text>
+  </g>
+  <g class="node" style="--d:0.12s">
+    <rect x="141" y="66" width="88" height="88" rx="12" class="node-card"/>
+    <image href="/images/products/pressure-gauges.webp" x="151" y="76" width="68" height="68" preserveAspectRatio="xMidYMid meet"/>
+    <text x="185" y="171" class="lbl" text-anchor="middle">GAUGE</text>
+  </g>
+  <g class="node" style="--d:0.24s">
+    <rect x="256" y="66" width="88" height="88" rx="12" class="node-card"/>
+    <image href="/images/products/globe-valves.webp" x="266" y="76" width="68" height="68" preserveAspectRatio="xMidYMid meet"/>
+    <text x="300" y="171" class="lbl" text-anchor="middle">ISOLATION</text>
+  </g>
+  <g class="node" style="--d:0.36s">
+    <rect x="371" y="66" width="88" height="88" rx="12" class="node-card"/>
+    <image href="/images/products/control-valves.webp" x="381" y="76" width="68" height="68" preserveAspectRatio="xMidYMid meet"/>
+    <text x="415" y="171" class="lbl" text-anchor="middle">CONTROL</text>
+  </g>
+  <g class="node node-big" style="--d:0.48s">
+    <rect x="472" y="182" width="116" height="116" rx="16" class="node-card"/>
+    <image href="/images/products/temperature-sensors.webp" x="486" y="196" width="88" height="72" preserveAspectRatio="xMidYMid meet"/>
+    <text x="530" y="286" class="node-cap" text-anchor="middle">PROCESS</text>
+  </g>
+  <g class="node" style="--d:0.6s">
+    <rect x="371" y="326" width="88" height="88" rx="12" class="node-card"/>
+    <image href="/images/products/float-steam-trap.webp" x="381" y="336" width="68" height="68" preserveAspectRatio="xMidYMid meet"/>
+    <text x="415" y="431" class="lbl" text-anchor="middle">STEAM TRAP</text>
+  </g>
+  <g class="node" style="--d:0.72s">
+    <rect x="256" y="326" width="88" height="88" rx="12" class="node-card"/>
+    <image href="/images/products/water-meters.webp" x="266" y="336" width="68" height="68" preserveAspectRatio="xMidYMid meet"/>
+    <text x="300" y="431" class="lbl" text-anchor="middle">METERING</text>
+  </g>
+  <g class="node" style="--d:0.84s">
+    <rect x="141" y="326" width="88" height="88" rx="12" class="node-card"/>
+    <image href="/images/products/level-switches.webp" x="151" y="336" width="68" height="68" preserveAspectRatio="xMidYMid meet"/>
+    <text x="185" y="431" class="lbl" text-anchor="middle">FEED TANK</text>
+  </g>
+  <g transform="translate(40 456)" class="legend">
+    <line x1="0" y1="0" x2="22" y2="0" class="leg-steam"/><text x="30" y="4" class="lbl">STEAM</text>
+    <line x1="100" y1="0" x2="122" y2="0" class="leg-cond"/><text x="130" y="4" class="lbl">CONDENSATE</text>
+  </g>
+</svg></div>
   </div>
 </section>
 
