@@ -67,7 +67,6 @@ const home = {
   body: `
 <section class="hero">
   ${heroVideoHtml()}
-  <div class="blueprint" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">Steam &amp; Thermal Utility Engineering</p>
