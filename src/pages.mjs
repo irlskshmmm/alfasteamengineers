@@ -1,5 +1,5 @@
 import { company, services, industries, products, productCategories, process } from './site.config.mjs';
-import { esc, icon, ctaBand, pageHero, contactList, steamLoopSvg } from './layout.mjs';
+import { esc, icon, ctaBand, pageHero, contactList } from './layout.mjs';
 
 const productById = Object.fromEntries(products.map((p) => [p.id, p]));
 
@@ -69,7 +69,20 @@ const home = {
         <li>${icon('check')} Engineering and components from one team</li>
       </ul>
     </div>
-    <div class="hero-visual">${steamLoopSvg()}</div>
+    <div class="hero-gallery" aria-label="Steam system components">
+      ${[
+        ['control-valves', 'Control valves', 'tile-main'],
+        ['steam-traps', 'Steam traps', ''],
+        ['pressure-gauges', 'Pressure gauges', ''],
+        ['globe-valves', 'Globe valves', ''],
+        ['float-steam-trap', 'Float traps', ''],
+        ['boiler-tubes', 'Boiler tubes', ''],
+      ].map(([id, label, cls], i) => `
+      <figure class="tile ${cls}">
+        <img src="/images/products/${id}.webp" alt="${label}" width="800" height="800" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
+        <figcaption>${label}</figcaption>
+      </figure>`).join('')}
+    </div>
   </div>
 </section>
 
