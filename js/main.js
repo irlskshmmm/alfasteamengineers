@@ -22,6 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.matchMedia('(min-width: 961px)').addEventListener('change', (e) => { if (e.matches) setOpen(false); });
   }
 
+  // Hero video: never play for reduced-motion users; pause when off-screen
+  const heroVideo = document.querySelector('[data-hero-video]');
+  if (heroVideo) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) heroVideo.pause();
+    else if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { e.isIntersecting ? heroVideo.play().catch(() => {}) : heroVideo.pause(); }).observe(heroVideo);
+    }
+  }
+
   // Reveal on scroll
   const reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {

@@ -25,6 +25,16 @@ export const company = {
 // Used for canonical links, Open Graph URLs and sitemap.xml. Leave '' to skip.
 export const siteUrl = '';
 
+// Hero background video (muted, looping, low opacity). Put the clip at this
+// path — prepare it with tools/prepare-hero-video.sh. It is only rendered when
+// the file exists, so the site works without it.
+export const heroVideo = {
+  webm: '/videos/hero-power-plant.webm',
+  mp4: '/videos/hero-power-plant.mp4',
+  poster: '/videos/hero-power-plant.jpg',
+  credit: '', // e.g. 'Video: <author> on Pexels' — shown small in the hero corner
+};
+
 export const nav = [
   { label: 'About', href: '/about.html' },
   { label: 'Services', href: '/services.html', children: 'services' },

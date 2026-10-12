@@ -1,5 +1,18 @@
-import { company, services, industries, products, productCategories, process } from './site.config.mjs';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { company, services, industries, products, productCategories, process, heroVideo } from './site.config.mjs';
 import { esc, icon, ctaBand, pageHero, contactList, steamLoopSvg } from './layout.mjs';
+
+const root = fileURLToPath(new URL('..', import.meta.url));
+const hasFile = (p) => p && existsSync(root + p.replace(/^\//, ''));
+const heroVideoHtml = () => hasFile(heroVideo.mp4) ? `
+  <div class="hero-media" aria-hidden="true">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata"${hasFile(heroVideo.poster) ? ` poster="${heroVideo.poster}"` : ''} data-hero-video>
+      ${hasFile(heroVideo.webm) ? `<source src="${heroVideo.webm}" type="video/webm">` : ''}
+      <source src="${heroVideo.mp4}" type="video/mp4">
+    </video>
+  </div>
+  ${heroVideo.credit ? `<p class="hero-credit">${esc(heroVideo.credit)}</p>` : ''}` : '';
 
 const productById = Object.fromEntries(products.map((p) => [p.id, p]));
 
@@ -53,6 +66,7 @@ const home = {
   bodyClass: 'home',
   body: `
 <section class="hero">
+  ${heroVideoHtml()}
   <div class="blueprint" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-copy">
