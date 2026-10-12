@@ -207,16 +207,6 @@ ul, ol { margin: 0; padding: 0; }
 .loop-svg .leg-steam, .loop-svg .leg-cond { stroke-width: 3; stroke-linecap: round; }
 .loop-svg .leg-steam { stroke: var(--orange); }
 .loop-svg .leg-cond { stroke: var(--blue); }
-.loop-svg .pipe path { stroke-width: 8; }
-.loop-svg .node-card { fill: #fff; stroke: var(--line); stroke-width: 1.2; }
-.loop-svg .node { filter: drop-shadow(0 6px 12px rgba(3, 57, 129, 0.10)); transition: transform .3s ease; transform-box: fill-box; transform-origin: center; animation: node-in .6s ease both; animation-delay: var(--d); }
-.loop-svg .node:hover { transform: scale(1.06); }
-.loop-svg .node-big .node-card { stroke: var(--blue); stroke-width: 1.5; }
-.loop-svg .node-cap { fill: var(--blue); font-size: 10.5px; font-weight: 500; letter-spacing: 0.12em; }
-.loop-svg .loop-core circle { fill: var(--blue-tint); stroke: none; }
-.loop-svg .loop-core path { fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transform-origin: 300px 246px; animation: spin 6s linear infinite; }
-@keyframes node-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@keyframes spin { to { transform: rotate(360deg); } }
 @keyframes flow { to { stroke-dashoffset: -44; } }
 @keyframes flicker { 0%, 100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0.88); opacity: 0.85; } }
 @keyframes needle { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-14deg); } }

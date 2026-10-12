@@ -208,60 +208,77 @@ ${footer()}
 `;
 }
 
-// Animated steam loop: real component photos placed on a live flow path — used in the home hero.
-const loopNodes = [
-  // [image, label, cx, cy, size, big]
-  ['boiler-tubes', 'BOILER', 70, 240, 116, true],
-  ['pressure-gauges', 'GAUGE', 185, 110, 88],
-  ['globe-valves', 'ISOLATION', 300, 110, 88],
-  ['control-valves', 'CONTROL', 415, 110, 88],
-  ['temperature-sensors', 'PROCESS', 530, 240, 116, true],
-  ['float-steam-trap', 'STEAM TRAP', 415, 370, 88],
-  ['water-meters', 'METERING', 300, 370, 88],
-  ['level-switches', 'FEED TANK', 185, 370, 88],
-];
-
-const loopNode = ([img, label, cx, cy, size, big], i) => {
-  const h = size / 2;
-  const x = cx - h, y = cy - h;
-  const pad = big ? 14 : 10;
-  const imgH = big ? size - pad - 30 : size - pad * 2;
-  const caption = big
-    ? `<text x="${cx}" y="${y + size - 12}" class="node-cap" text-anchor="middle">${label}</text>`
-    : `<text x="${cx}" y="${y + size + 17}" class="lbl" text-anchor="middle">${label}</text>`;
-  return `
-  <g class="node${big ? ' node-big' : ''}" style="--d:${i * 0.12}s">
-    <rect x="${x}" y="${y}" width="${size}" height="${size}" rx="${big ? 16 : 12}" class="node-card"/>
-    <image href="/images/products/${img}.webp" x="${x + pad}" y="${y + pad}" width="${size - pad * 2}" height="${imgH}" preserveAspectRatio="xMidYMid meet"/>
-    ${caption}
-  </g>`;
-};
-
+// Animated schematic of a steam loop — used in the home hero.
 export const steamLoopSvg = () => `
-<svg class="loop-svg" viewBox="0 0 600 470" role="img" aria-labelledby="loop-title loop-desc">
-  <title id="loop-title">Steam system loop</title>
-  <desc id="loop-desc">Steam flows from the boiler through a pressure gauge, isolation valve and control valve to the process. Condensate drains through a steam trap, metering and the feed tank back to the boiler.</desc>
+<svg class="loop-svg" viewBox="0 0 600 440" role="img" aria-labelledby="loop-title loop-desc">
+  <title id="loop-title">Steam system schematic</title>
+  <desc id="loop-desc">Boiler generating steam to a distribution header, pressure reducing station and process users, with steam traps returning condensate to the feed tank and back to the boiler.</desc>
   <defs>
     <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="var(--grid-line)" stroke-width="1"/></pattern>
   </defs>
-  <rect width="600" height="470" fill="url(#grid)"/>
+  <rect width="600" height="440" fill="url(#grid)"/>
 
+  <!-- Static pipework -->
   <g class="pipe">
-    <path d="M70 182V140Q70 110 100 110H500Q530 110 530 140V182"/>
-    <path d="M530 298V340Q530 370 500 370H100Q70 370 70 340V298"/>
+    <path d="M110 200V70h460"/>
+    <path d="M330 70v80M480 70v80"/>
+    <path d="M330 230v50M480 230v50"/>
+    <path d="M480 310v20H255v15"/>
+    <path d="M330 310v20"/>
+    <path d="M200 370H120V300"/>
   </g>
-  <path class="flow flow-steam" d="M70 182V140Q70 110 100 110H500Q530 110 530 140V182"/>
-  <path class="flow flow-cond" d="M530 298V340Q530 370 500 370H100Q70 370 70 340V298"/>
+  <!-- Animated flows -->
+  <path class="flow flow-steam" d="M110 200V70h460"/>
+  <path class="flow flow-steam" d="M330 70v80M480 70v80"/>
+  <path class="flow flow-cond" d="M480 310v20H255v15M330 310v20"/>
+  <path class="flow flow-cond" d="M200 370H120V300"/>
 
-  <text x="300" y="196" class="lbl lbl-steam" text-anchor="middle">STEAM →</text>
-  <text x="300" y="296" class="lbl lbl-cond" text-anchor="middle">← CONDENSATE RETURN</text>
-  <g class="loop-core">
-    <circle cx="300" cy="246" r="26"/>
-    <path d="M300 226a20 20 0 1 1-19.6 24" />
-    <path d="m276 244 4.4 6.6 6.6-4.4"/>
+  <!-- Boiler -->
+  <g class="equip">
+    <rect x="40" y="200" width="140" height="100" rx="14"/>
+    <path d="M60 222h100M60 240h100M60 258h100" class="thin"/>
+    <path class="flame" d="M135 288c4-10 10-8 9-16 8 6 10 12 6 18 6-2 8-8 8-8 4 8 0 14-6 16H141c-6-2-8-6-6-10z"/>
   </g>
-${loopNodes.map(loopNode).join('')}
-  <g transform="translate(40 456)" class="legend">
+  <text x="60" y="190" class="lbl">BOILER</text>
+
+  <!-- Pressure gauge on main -->
+  <g class="equip"><path d="M180 70v-18"/><circle cx="180" cy="38" r="14"/></g>
+  <path d="M180 38l7-6" class="needle"/>
+  <text x="180" y="16" class="lbl" text-anchor="middle">PG</text>
+
+  <!-- PRV station -->
+  <g class="equip valve"><path d="M240 60v20l20-10zM280 60v20l-20-10z"/><path d="M260 70V50h-8h16"/></g>
+  <text x="260" y="104" class="lbl" text-anchor="middle">PRV</text>
+
+  <!-- Separator -->
+  <g class="equip"><rect x="390" y="56" width="22" height="28" rx="6"/></g>
+  <text x="401" y="104" class="lbl" text-anchor="middle">SEP</text>
+
+  <!-- Process users -->
+  <g class="equip">
+    <rect x="290" y="150" width="80" height="80" rx="10"/>
+    <path d="M300 170c10 8 50-8 60 0M300 190c10 8 50-8 60 0M300 210c10 8 50-8 60 0" class="thin"/>
+    <rect x="440" y="150" width="80" height="80" rx="40"/>
+    <path d="M450 190h60" class="thin"/>
+  </g>
+  <text x="330" y="144" class="lbl" text-anchor="middle">HEAT EXCHANGER</text>
+  <text x="480" y="144" class="lbl" text-anchor="middle">VESSEL</text>
+
+  <!-- Traps -->
+  <g class="equip trap"><circle cx="330" cy="295" r="15"/><circle cx="480" cy="295" r="15"/></g>
+  <text x="330" y="300" class="lbl lbl-t" text-anchor="middle">T</text>
+  <text x="480" y="300" class="lbl lbl-t" text-anchor="middle">T</text>
+  <text x="535" y="300" class="lbl" text-anchor="middle">TRAPS</text>
+
+  <!-- Feed tank + pump -->
+  <g class="equip"><rect x="200" y="345" width="110" height="50" rx="8"/><circle cx="120" cy="370" r="12"/></g>
+  <text x="255" y="374" class="lbl" text-anchor="middle">FEED TANK</text>
+  <text x="102" y="374" class="lbl" text-anchor="end">PUMP</text>
+  <text x="410" y="352" class="lbl lbl-cond" text-anchor="middle">CONDENSATE RETURN</text>
+  <text x="400" y="62" class="lbl lbl-steam" text-anchor="middle" dx="80">STEAM MAIN</text>
+
+  <!-- Legend -->
+  <g transform="translate(40 418)" class="legend">
     <line x1="0" y1="0" x2="22" y2="0" class="leg-steam"/><text x="30" y="4" class="lbl">STEAM</text>
     <line x1="100" y1="0" x2="122" y2="0" class="leg-cond"/><text x="130" y="4" class="lbl">CONDENSATE</text>
   </g>
