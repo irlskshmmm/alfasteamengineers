@@ -5,8 +5,9 @@
 // simply not rendered, and the build prints a reminder listing them.
 
 export const company = {
-  name: 'Alfa Steam Engineers & Consultants',
-  shortName: 'Alfa Steam',
+  name: 'Alfa Steam Engineers and Consultants Pvt Ltd',
+  brand: 'ASECON',
+  shortName: 'Alfa Steam Engineers and Consultants',
   tagline: 'Steam engineering, boiler systems, audits and energy efficiency consultancy.',
   // Contact details — TO CONFIRM before launch.
   phone: '',          // e.g. '+91 98765 43210' (display format)
@@ -17,6 +18,7 @@ export const company = {
   city: '',           // e.g. 'Pune, Maharashtra'
   hours: '',          // e.g. 'Mon–Sat, 9:30 am – 6:30 pm'
   gstin: '',
+  cin: '',
 };
 
 // Absolute site URL without trailing slash, e.g. 'https://www.alfasteam.in'.
@@ -124,11 +126,14 @@ export const services = [
   },
 ];
 
+// `featured` industries mirror the icons in the ASECON logo.
 export const industries = [
-  { name: 'Food & Beverage', note: 'Cooking, pasteurising, CIP and sterilisation.' },
+  { name: 'Power Plants', icon: 'power', featured: true, note: 'Boiler houses, auxiliary steam and condensate systems.' },
+  { name: 'Agro & Food Processing', icon: 'agro', featured: true, note: 'Cooking, drying, pasteurising, CIP and sterilisation.' },
+  { name: 'Pharmaceuticals & Chemicals', icon: 'pharma', featured: true, note: 'Process vessels, reactors, sterilisers and clean utilities.' },
+  { name: 'Manufacturing & Engineering', icon: 'gears', featured: true, note: 'Process heating, curing, drying and plant utilities.' },
+  { name: 'Oil & Gas', icon: 'rig', featured: true, note: 'Tracing, tank heating, reboilers and utility steam.' },
   { name: 'Dairy', note: 'Pasteurisers, evaporators and cleaning systems.' },
-  { name: 'Pharmaceuticals', note: 'Process vessels, sterilisers and clean utilities.' },
-  { name: 'Chemicals & Petrochemicals', note: 'Reactors, reboilers, tracing and tank heating.' },
   { name: 'Textiles', note: 'Dyeing, drying, stentering and finishing.' },
   { name: 'Paper & Packaging', note: 'Drying cylinders, corrugators and heating.' },
   { name: 'Sugar & Distilleries', note: 'Evaporation, distillation and process heating.' },

@@ -1,6 +1,6 @@
-# Alfa Steam Engineers & Consultants — website
+# ASECON — Alfa Steam Engineers and Consultants Pvt Ltd — website
 
-Static corporate website for Alfa Steam Engineers & Consultants: steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy.
+Static corporate website for ASECON (Alfa Steam Engineers and Consultants Pvt Ltd): steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy.
 
 Plain HTML, CSS and JavaScript — no framework, no runtime dependencies, no build step needed to deploy. The generated HTML pages are committed at the repository root, so the site is served exactly as checked in.
 
@@ -12,7 +12,7 @@ products.html, contact.html, thank-you.html, 404.html   ← generated pages
 services/*.html                                         ← generated service pages
 css/styles.css                                          ← all styles
 js/main.js                                              ← navigation, filters, enquiry form
-images/                                                 ← favicon, OG image, optimised product images (WebP)
+images/                                                 ← ASECON logo (asecon-*), favicon, OG image, optimised product images (WebP)
 src/site.config.mjs                                     ← company details + all page content data
 src/layout.mjs, src/pages.mjs                           ← page templates
 tools/build.mjs                                         ← regenerates the HTML from src/

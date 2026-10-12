@@ -22,6 +22,11 @@ const ICONS = {
   gauge: '<path d="M4 16a8 8 0 1 1 16 0"/><path d="m12 16 4-5"/><circle cx="12" cy="16" r="1"/>',
   shield: '<path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>',
   doc: '<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/>',
+  power: '<path d="M3 21h18M5 21l1.5-11h5L13 21"/><path d="M15 21v-6h4v6"/><path d="M7 7c0-2 2-2 2-4M10 7c0-2 2-2 2-4"/>',
+  agro: '<path d="M12 21V9"/><path d="M12 13c-3 0-4.5-2-4.5-4.5C10.5 8.5 12 10 12 13zM12 13c3 0 4.5-2 4.5-4.5C13.5 8.5 12 10 12 13zM12 9c-2.5 0-3.5-2-3.5-4C11 5 12 6.5 12 9zM12 9c2.5 0 3.5-2 3.5-4C13 5 12 6.5 12 9z"/>',
+  pharma: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 15h9"/>',
+  gears: '<circle cx="9" cy="9" r="2.5"/><path d="M9 3v2M9 13v2M3 9h2M13 9h2M4.8 4.8l1.4 1.4M11.8 11.8l1.4 1.4M4.8 13.2l1.4-1.4M11.8 6.2l1.4-1.4"/><circle cx="17" cy="17" r="2"/><path d="M17 13v1.5M17 19.5V21M13 17h1.5M19.5 17H21"/>',
+  rig: '<path d="M8 21 12 5l4 16M9.5 15h5M10.5 11h3M6 21h12"/><path d="M12 5V3M15 4c1-1 1-2 0-3 2 1 2.5 2.5 1.5 4"/>',
   wrench: '<path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5"/><path d="M14.5 6.5 17 4"/>',
 };
 
@@ -30,12 +35,8 @@ export const icon = (name, cls = 'icon') =>
 
 export const logo = () => `
 <a class="brand" href="/index.html" aria-label="${esc(company.name)} — home">
-  <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
-    <rect width="40" height="40" rx="8" fill="var(--brand-mark-bg)"/>
-    <path d="M11 30 20 9l9 21" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-    <path d="M14.5 23h11" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
-  </svg>
-  <span class="brand-text"><strong>ALFA STEAM</strong><small>Engineers &amp; Consultants</small></span>
+  <img class="brand-mark" src="/images/asecon-mark.webp" alt="${esc(company.brand)}" width="288" height="120">
+  <span class="brand-text"><strong>Alfa Steam Engineers</strong><small>and Consultants Pvt Ltd</small></span>
 </a>`;
 
 const hasContact = () => company.phone || company.email || company.whatsapp;
@@ -90,9 +91,9 @@ function footer() {
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      ${logo()}
+      <a href="/index.html" class="footer-logo"><img src="/images/asecon-logo-640.webp" alt="${esc(company.brand)} — ${esc(company.name)}" width="640" height="318" loading="lazy"></a>
       <p>${esc(company.tagline)}</p>
-      <a class="btn btn-outline-light btn-sm" href="/contact.html">Send an enquiry ${icon('arrow')}</a>
+      <a class="btn btn-outline btn-sm" href="/contact.html">Send an enquiry ${icon('arrow')}</a>
     </div>
     <div>
       <h2 class="footer-h">Services</h2>
@@ -154,14 +155,16 @@ export function pageHero({ eyebrow, title, lead, crumbs = [] }) {
 }
 
 export function layout({ path, title, description, body, bodyClass = '', noindex = false }) {
-  const fullTitle = path === '/index.html' ? `${company.name} | Steam Engineering & Boiler Consultancy` : `${title} | ${company.name}`;
+  const fullTitle = path === '/index.html' ? `${company.brand} | Steam Engineering, Boiler Systems & Energy Audits` : `${title} | ${company.brand} — Alfa Steam Engineers and Consultants`;
   const canonicalPath = path === '/index.html' ? '/' : path;
   const canonical = siteUrl ? `${siteUrl}${canonicalPath}` : '';
-  const ogImage = siteUrl ? `${siteUrl}/images/og-alfa-steam.jpg` : '/images/og-alfa-steam.jpg';
+  const ogImage = siteUrl ? `${siteUrl}/images/og-asecon.jpg` : '/images/og-asecon.jpg';
   const ld = path === '/index.html' ? `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: company.name,
+    alternateName: company.brand,
+    logo: siteUrl ? `${siteUrl}/images/asecon-logo.png` : undefined,
     description: company.tagline,
     ...(siteUrl && { url: siteUrl }),
     ...(company.phone && { telephone: company.phone }),
@@ -178,7 +181,7 @@ export function layout({ path, title, description, body, bodyClass = '', noindex
   <meta name="description" content="${esc(description)}">
   ${noindex ? '<meta name="robots" content="noindex">' : '<meta name="robots" content="index, follow">'}
   ${canonical ? `<link rel="canonical" href="${canonical}">` : ''}
-  <meta name="theme-color" content="#0a1622">
+  <meta name="theme-color" content="#034c9b">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="${esc(company.name)}">
   <meta property="og:title" content="${esc(fullTitle)}">
@@ -189,7 +192,7 @@ export function layout({ path, title, description, body, bodyClass = '', noindex
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
   <script src="/js/main.js" defer></script>
   ${ld}

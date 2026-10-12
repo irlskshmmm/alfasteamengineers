@@ -25,6 +25,13 @@ const productCard = (p) => `
   </div>
 </article>`;
 
+const indFeature = (ind, tag = 'h3') => `
+<li class="reveal">
+  <span class="ind-icon">${icon(ind.icon)}</span>
+  <${tag} class="h3">${ind.name}</${tag}>
+  <p>${ind.note}</p>
+</li>`;
+
 const processSteps = () => `
 <ol class="process">
   ${process.map(([t, d], i) => `<li class="reveal"><span class="step-no">${String(i + 1).padStart(2, '0')}</span><h3>${t}</h3><p>${d}</p></li>`).join('')}
@@ -42,7 +49,7 @@ const svcBySlug = Object.fromEntries(services.map((s) => [s.slug, s]));
 const home = {
   path: '/index.html',
   title: 'Home',
-  description: `${company.name} — steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy for process industries.`,
+  description: `${company.brand} — Alfa Steam Engineers and Consultants Pvt Ltd: steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy for process industries.`,
   bodyClass: 'home',
   body: `
 <section class="hero">
@@ -50,11 +57,11 @@ const home = {
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">Steam &amp; Thermal Utility Engineering</p>
-      <h1>Steam systems engineered for <span class="hl">efficiency, safety</span> and uptime.</h1>
-      <p class="lead">${esc(company.name)} provides steam engineering, boiler system support, industrial audits, energy efficiency and engineering consultancy for plants that depend on steam.</p>
+      <h1>Steam systems engineered for <span class="hl-blue">efficiency,</span> <span class="hl">safety</span> and uptime.</h1>
+      <p class="lead">Alfa Steam Engineers and Consultants (${esc(company.brand)}) provides steam engineering, boiler system support, industrial audits, energy efficiency and engineering consultancy for plants that depend on steam.</p>
       <div class="hero-actions">
         <a class="btn btn-accent btn-lg" href="/contact.html">Request a Consultation ${icon('arrow')}</a>
-        <a class="btn btn-ghost btn-lg" href="/services.html">Explore Services</a>
+        <a class="btn btn-outline btn-lg" href="/services.html">Explore Services</a>
       </div>
       <ul class="hero-points">
         <li>${icon('check')} Whole-system view, boiler to condensate</li>
@@ -130,7 +137,7 @@ const home = {
       <h2>Industries that run on steam</h2>
       <p>Our services apply wherever process heat is generated and distributed as steam.</p>
     </div>
-    <ul class="ind-grid">${industries.slice(0, 8).map((ind) => `<li class="reveal"><h3>${ind.name}</h3><p>${ind.note}</p></li>`).join('')}</ul>
+    <ul class="ind-feature">${industries.filter((i) => i.featured).map((i) => indFeature(i)).join('')}</ul>
     <p class="center"><a class="link-arrow" href="/industries.html">See all industries ${icon('arrow')}</a></p>
   </div>
 </section>
@@ -141,14 +148,14 @@ ${ctaBand()}`,
 const about = {
   path: '/about.html',
   title: 'About Us',
-  description: `About ${company.name} — a steam and boiler engineering consultancy focused on efficient, safe and reliable steam systems.`,
+  description: `About ${company.brand} (${company.name}) — a steam and boiler engineering consultancy focused on efficient, safe and reliable steam systems.`,
   body: `
-${pageHero({ eyebrow: 'About us', title: 'Engineering partners for steam-dependent plants', lead: `${company.name} helps industrial plants generate, distribute and use steam better — with practical engineering, honest assessment and hands-on support.`, crumbs: [{ label: 'About' }] })}
+${pageHero({ eyebrow: 'About us', title: 'Engineering partners for steam-dependent plants', lead: `${company.brand} helps industrial plants generate, distribute and use steam better — with practical engineering, honest assessment and hands-on support.`, crumbs: [{ label: 'About' }] })}
 <section class="section">
   <div class="container split split-top">
     <div class="prose">
       <h2>Who we are</h2>
-      <p>${esc(company.name)} is an engineering and consultancy firm focused on steam and thermal utility systems. We work with plant owners, utility managers and project teams who need steam to be available, efficient and safe.</p>
+      <p>${esc(company.name)} (${esc(company.brand)}) is an engineering and consultancy firm focused on steam and thermal utility systems. We work with plant owners, utility managers and project teams who need steam to be available, efficient and safe.</p>
       <p>Our work spans the full steam loop — boilers and boiler house auxiliaries, distribution networks, process heating equipment, steam traps and condensate recovery. Because these parts affect one another, we look at them as one system rather than in isolation.</p>
       <p>Alongside engineering and audits, we help clients specify and source the components our recommendations call for, so there is a straight line from finding to fix.</p>
     </div>
@@ -256,7 +263,9 @@ const industriesPage = {
 ${pageHero({ eyebrow: 'Industries', title: 'Industries that run on steam', lead: 'Steam is the workhorse of process heating. Wherever it is generated and used, the same engineering principles decide cost, quality and safety.', crumbs: [{ label: 'Industries' }] })}
 <section class="section">
   <div class="container">
-    <ul class="ind-grid ind-grid-lg">${industries.map((ind) => `<li class="reveal"><h2 class="h3">${ind.name}</h2><p>${ind.note}</p></li>`).join('')}</ul>
+    <ul class="ind-feature ind-feature-lg">${industries.filter((i) => i.featured).map((i) => indFeature(i, 'h2')).join('')}</ul>
+    <h2 class="sub-h">Also serving</h2>
+    <ul class="ind-grid">${industries.filter((i) => !i.featured).map((ind) => `<li class="reveal"><h3>${ind.name}</h3><p>${ind.note}</p></li>`).join('')}</ul>
     <p class="note">Don’t see your industry? If your plant uses steam or thermal utilities, <a href="/contact.html">tell us about it</a>.</p>
   </div>
 </section>
@@ -292,7 +301,7 @@ const serviceOptions = [...services.map((s) => [s.slug, s.title]), ['components'
 const contact = {
   path: '/contact.html',
   title: 'Contact & Enquiry',
-  description: `Contact ${company.name} for steam engineering, boiler, audit, energy efficiency and consultancy enquiries.`,
+  description: `Contact ${company.brand} for steam engineering, boiler, audit, energy efficiency and consultancy enquiries.`,
   body: `
 ${pageHero({ eyebrow: 'Contact', title: 'Request a consultation', lead: 'Tell us about your plant and requirement. The more detail you share, the more useful our first response will be.', crumbs: [{ label: 'Contact' }] })}
 <section class="section">
