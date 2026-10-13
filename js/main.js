@@ -25,9 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Sticky header shadow
+  // Header: large at the top of the page, compact once scrolled (with hysteresis to avoid flicker)
   const header = document.querySelector('[data-header]');
-  const onScroll = () => header && header.classList.toggle('scrolled', window.scrollY > 8);
+  let compact = false;
+  const onScroll = () => {
+    if (!header) return;
+    const y = window.scrollY;
+    if (!compact && y > 80) compact = true;
+    else if (compact && y < 16) compact = false;
+    header.classList.toggle('scrolled', compact);
+  };
+  // Reserve the header's full (uncompacted) height so content never jumps when it shrinks
+  const reserveHeaderSpace = () => {
+    if (!header || header.classList.contains('scrolled')) return;
+    document.documentElement.style.setProperty('--header-space', `${header.offsetHeight}px`);
+  };
+  reserveHeaderSpace();
+  window.addEventListener('resize', reserveHeaderSpace);
+  if (header) header.addEventListener('transitionend', reserveHeaderSpace);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 

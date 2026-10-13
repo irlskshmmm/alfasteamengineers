@@ -39,9 +39,9 @@ const ICONS = {
 export const icon = (name, cls = 'icon') =>
   `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 
-export const wordmark = (cls = 'wordmark') => `
+export const wordmark = (cls = 'brand-logo') => `
 <a class="${cls}" href="/index.html" aria-label="${esc(company.brand)} — ${esc(company.name)}, home">
-  <span class="wm-name" aria-hidden="true"><span class="wm-a">AS</span><span class="wm-b">CON</span></span>
+  <img src="/images/asecon-mark.webp" alt="" width="288" height="120">
   <span class="wm-sub" aria-hidden="true">Alfa Steam Engineers<br>&amp; Consultants</span>
 </a>`;
 
