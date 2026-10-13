@@ -6,7 +6,7 @@
 
 export const company = {
   name: 'Alfa Steam Engineers and Consultants Pvt Ltd',
-  brand: 'ASECON',
+  brand: 'ASCON',
   shortName: 'Alfa Steam Engineers and Consultants',
   tagline: 'Steam engineering, boiler systems, audits and energy efficiency consultancy.',
   // Contact details — TO CONFIRM before launch.
@@ -35,12 +35,56 @@ export const heroVideo = {
   credit: '', // e.g. 'Video: <author> on Pexels' — shown small in the hero corner
 };
 
+// Slim utility bar above the main navigation
+export const utilityNav = [
+  { label: 'Search', action: 'search' },
+  { label: 'News', href: '/news.html#news' },
+  { label: 'Events', href: '/news.html#events' },
+];
+
+// Main navigation with dropdown menus
 export const nav = [
-  { label: 'About', href: '/about.html' },
-  { label: 'Services', href: '/services.html', children: 'services' },
-  { label: 'Industries', href: '/industries.html' },
-  { label: 'Components', href: '/products.html' },
-  { label: 'Contact', href: '/contact.html' },
+  { label: 'About', href: '/about.html', match: ['/about.html'], children: [
+    { label: 'Vision & Mission', href: '/about.html#vision' },
+    { label: 'About ASCON', href: '/about.html#who-we-are' },
+    { label: 'Company History', href: '/about.html#history' },
+  ] },
+  { label: 'Industries', href: '/industries.html', match: ['/industries.html'], wide: true, children: [
+    { label: 'Oil & Gas', href: '/industries.html#oil-gas' },
+    { label: 'Manufacturing', href: '/industries.html#manufacturing-engineering' },
+    { label: 'Chemical', href: '/industries.html#pharmaceuticals-chemicals' },
+    { label: 'Energy', href: '/industries.html#power-plants' },
+    { label: 'Infrastructure', href: '/industries.html' },
+    { label: 'Pulp & Paper', href: '/industries.html#paper-packaging' },
+    { label: 'Pharmaceutical', href: '/industries.html#pharmaceuticals-chemicals' },
+    { label: 'Food & Beverage', href: '/industries.html#agro-food-processing' },
+    { label: 'Water', href: '/industries.html' },
+    { label: 'Mining', href: '/industries.html' },
+    { label: 'Metals', href: '/industries.html' },
+  ] },
+  { label: 'Products', href: '/products.html', match: ['/products.html'], children: [
+    { label: 'Steam Traps', href: '/products.html#steam' },
+    { label: 'Valves & Gauges', href: '/products.html#valves' },
+    { label: 'Boiler Accessories', href: '/products.html#boiler' },
+    { label: 'Condensate Recovery', href: '/products.html#steam' },
+    { label: 'Other Products', href: '/products.html#electrical' },
+  ] },
+  { label: 'Support', href: '/services.html', match: ['/services.html', '/services/'], children: [
+    { label: 'Technical Consultancy', href: '/services/engineering-consultancy.html' },
+    { label: 'Industrial Audits', href: '/services/industrial-audits.html' },
+    { label: 'Engineering Support', href: '/services/steam-engineering.html' },
+    { label: 'Product Assistance', href: '/contact.html?service=components' },
+  ] },
+  { label: 'Downloads', href: '/downloads.html', match: ['/downloads.html'], children: [
+    { label: 'Technical Documents', href: '/downloads.html#technical-documents' },
+    { label: 'Product Catalogues', href: '/downloads.html#product-catalogues' },
+    { label: 'Resources', href: '/downloads.html#resources' },
+  ] },
+  { label: 'Contact', href: '/contact.html', match: ['/contact.html', '/thank-you.html'], children: [
+    { label: 'Contact Us', href: '/contact.html' },
+    { label: 'Request a Consultation', href: '/contact.html#enquiry' },
+    { label: 'Enquiries', href: '/contact.html?service=other#enquiry' },
+  ] },
 ];
 
 export const services = [

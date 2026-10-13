@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { company, services, industries, products, productCategories, process, heroVideo } from './site.config.mjs';
-import { esc, icon, ctaBand, pageHero, contactList, steamLoopSvg } from './layout.mjs';
+import { esc, icon, ctaBand, pageHero, contactList } from './layout.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const hasFile = (p) => p && existsSync(root + p.replace(/^\//, ''));
@@ -13,6 +13,32 @@ const heroVideoHtml = () => hasFile(heroVideo.mp4) ? `
     </video>
   </div>
   ${heroVideo.credit ? `<p class="hero-credit">${esc(heroVideo.credit)}</p>` : ''}` : '';
+
+const heroSlides = [
+  {
+    label: 'Steam engineering',
+    title: 'Engineering Reliable Steam Systems. <span class="hl-blue">Powering Industrial Performance.</span>',
+    text: 'Steam engineering, boiler consultancy, industrial audits, and mechanical engineering solutions tailored to your operations.',
+    primary: ['Explore Our Expertise', '/services.html'],
+    secondary: ['Request a Consultation', '/contact.html#enquiry'],
+  },
+  {
+    label: 'Industrial audits',
+    title: 'Audits That Turn Plant Data Into <span class="hl-blue">Clear, Prioritised Action.</span>',
+    text: 'On-site assessment of steam, boiler and utility systems, with findings and recommendations you can plan and budget against.',
+    primary: ['Explore Industrial Audits', '/services/industrial-audits.html'],
+    secondary: ['Request a Consultation', '/contact.html?service=industrial-audits#enquiry'],
+  },
+  {
+    label: 'Products',
+    title: 'The Right Component <span class="hl-blue">for Every Steam Duty.</span>',
+    text: 'Steam traps, valves, gauges, boiler accessories and condensate recovery components, specified and supplied for your plant.',
+    primary: ['View Products', '/products.html'],
+    secondary: ['Product Assistance', '/contact.html?service=components#enquiry'],
+  },
+];
+
+const slugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 const productById = Object.fromEntries(products.map((p) => [p.id, p]));
 
@@ -39,7 +65,7 @@ const productCard = (p) => `
 </article>`;
 
 const indFeature = (ind, tag = 'h3') => `
-<li class="reveal">
+<li class="reveal" id="${slugify(ind.name)}">
   <span class="ind-icon">${icon(ind.icon)}</span>
   <${tag} class="h3">${ind.name}</${tag}>
   <p>${ind.note}</p>
@@ -65,25 +91,30 @@ const home = {
   description: `${company.brand} — Alfa Steam Engineers and Consultants Pvt Ltd: steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy for process industries.`,
   bodyClass: 'home',
   body: `
-<section class="hero">
+<section class="hero hero-carousel" aria-roledescription="carousel" aria-label="ASCON highlights" data-carousel>
   ${heroVideoHtml()}
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow">Steam &amp; Thermal Utility Engineering</p>
-      <h1>Steam systems engineered for <span class="hl-blue">efficiency,</span> <span class="hl">safety</span> and uptime.</h1>
-      <p class="lead">Alfa Steam Engineers and Consultants (${esc(company.brand)}) provides steam engineering, boiler system support, industrial audits, energy efficiency and engineering consultancy for plants that depend on steam.</p>
-      <div class="hero-actions">
-        <a class="btn btn-accent btn-lg" href="/contact.html">Request a Consultation ${icon('arrow')}</a>
-        <a class="btn btn-outline btn-lg" href="/services.html">Explore Services</a>
+  <div class="container hero-stage">
+    <div class="hero-content">
+      <div class="hero-brand">
+        <p class="hero-wordmark"><span class="wm-a">AS</span><span class="wm-b">CON</span></p>
+        <p class="hero-tagline">Alfa Steam Engineers &amp; Consultants</p>
       </div>
-      <ul class="hero-points">
-        <li>${icon('check')} Whole-system view, boiler to condensate</li>
-        <li>${icon('check')} Findings you can budget and act on</li>
-        <li>${icon('check')} Engineering and components from one team</li>
-      </ul>
+      <div class="hero-slides" aria-live="off" data-slides>
+        ${heroSlides.map((sl, i) => `
+        <div class="hero-slide${i === 0 ? ' is-active' : ''}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${heroSlides.length}: ${esc(sl.label)}"${i === 0 ? '' : ' inert'} data-slide>
+          ${i === 0 ? `<h1>${sl.title}</h1>` : `<h2 class="hero-title">${sl.title}</h2>`}
+          <p class="lead">${esc(sl.text)}</p>
+          <div class="hero-actions">
+            <a class="btn btn-square" href="${sl.primary[1]}">${sl.primary[0]} <span class="chev" aria-hidden="true">»</span></a>
+            <a class="hero-link" href="${sl.secondary[1]}">${sl.secondary[0]} ${icon('arrow')}</a>
+          </div>
+        </div>`).join('')}
+      </div>
+      <div class="hero-dots">${heroSlides.map((sl, i) => `<button type="button" class="hero-dot" aria-label="Show slide ${i + 1}: ${esc(sl.label)}"${i === 0 ? ' aria-current="true"' : ''} data-dot="${i}"></button>`).join('')}</div>
     </div>
-    <div class="hero-visual">${steamLoopSvg()}</div>
   </div>
+  <button type="button" class="hero-arrow hero-prev" aria-label="Previous slide" data-prev><span aria-hidden="true">«</span></button>
+  <button type="button" class="hero-arrow hero-next" aria-label="Next slide" data-next><span aria-hidden="true">»</span></button>
 </section>
 
 <section class="section">
@@ -164,7 +195,7 @@ const about = {
   description: `About ${company.brand} (${company.name}) — a steam and boiler engineering consultancy focused on efficient, safe and reliable steam systems.`,
   body: `
 ${pageHero({ eyebrow: 'About us', title: 'Engineering partners for steam-dependent plants', lead: `${company.brand} helps industrial plants generate, distribute and use steam better — with practical engineering, honest assessment and hands-on support.`, crumbs: [{ label: 'About' }] })}
-<section class="section">
+<section class="section" id="who-we-are">
   <div class="container split split-top">
     <div class="prose">
       <h2>Who we are</h2>
@@ -181,6 +212,25 @@ ${pageHero({ eyebrow: 'About us', title: 'Engineering partners for steam-depende
         <li>${icon('wrench')}<div><h3>Practical implementation</h3><p>Solutions that fit your plant, your budget and your shutdown windows.</p></div></li>
       </ul>
     </aside>
+  </div>
+</section>
+<section class="section section-alt" id="vision">
+  <div class="container vm-grid">
+    <div class="vm-card">
+      <p class="eyebrow">Vision</p>
+      <p class="vm-text">Steam systems that run efficiently, safely and reliably in every plant we work with.</p>
+    </div>
+    <div class="vm-card">
+      <p class="eyebrow">Mission</p>
+      <p class="vm-text">To engineer, audit and support steam and thermal utility systems with evidence-based recommendations and practical, hands-on implementation.</p>
+    </div>
+  </div>
+</section>
+<section class="section" id="history">
+  <div class="container narrow">
+    <p class="eyebrow">Company history</p>
+    <h2>Our story</h2>
+    <p class="muted">The ${esc(company.brand)} company history and milestones will be published here.</p>
   </div>
 </section>
 <section class="section section-alt">
@@ -278,7 +328,7 @@ ${pageHero({ eyebrow: 'Industries', title: 'Industries that run on steam', lead:
   <div class="container">
     <ul class="ind-feature ind-feature-lg">${industries.filter((i) => i.featured).map((i) => indFeature(i, 'h2')).join('')}</ul>
     <h2 class="sub-h">Also serving</h2>
-    <ul class="ind-grid">${industries.filter((i) => !i.featured).map((ind) => `<li class="reveal"><h3>${ind.name}</h3><p>${ind.note}</p></li>`).join('')}</ul>
+    <ul class="ind-grid">${industries.filter((i) => !i.featured).map((ind) => `<li class="reveal" id="${slugify(ind.name)}"><h3>${ind.name}</h3><p>${ind.note}</p></li>`).join('')}</ul>
     <p class="note">Don’t see your industry? If your plant uses steam or thermal utilities, <a href="/contact.html">tell us about it</a>.</p>
   </div>
 </section>
@@ -319,7 +369,7 @@ const contact = {
 ${pageHero({ eyebrow: 'Contact', title: 'Request a consultation', lead: 'Tell us about your plant and requirement. The more detail you share, the more useful our first response will be.', crumbs: [{ label: 'Contact' }] })}
 <section class="section">
   <div class="container contact-grid">
-    <form class="enquiry" name="enquiry" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" data-enquiry-form novalidate>
+    <form class="enquiry" id="enquiry" name="enquiry" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" data-enquiry-form novalidate>
       <input type="hidden" name="form-name" value="enquiry">
       <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="form-grid">
@@ -386,4 +436,42 @@ ${pageHero({ eyebrow: 'Error 404', title: 'This page could not be found', lead: 
 <section class="section"><div class="container center"><a class="btn btn-primary" href="/index.html">Back to home</a> <a class="btn btn-outline" href="/contact.html">Contact us</a></div></section>`,
 };
 
-export const pages = [home, about, servicesPage, ...servicePages, industriesPage, productsPage, contact, thankYou, notFound];
+const docGroup = (id, title, text) => `
+<section class="doc-group" id="${id}">
+  <h2>${title}</h2>
+  <p>${text}</p>
+  <a class="link-arrow" href="/contact.html?service=components#enquiry">Request by email ${icon('arrow')}</a>
+</section>`;
+
+const downloadsPage = {
+  path: '/downloads.html',
+  title: 'Downloads',
+  description: `Technical documents, product catalogues and resources from ${company.brand}.`,
+  body: `
+${pageHero({ eyebrow: 'Downloads', title: 'Documents and resources', lead: 'Technical documents, product catalogues and reference material. Files are shared on request while the library is being prepared.', crumbs: [{ label: 'Downloads' }] })}
+<section class="section">
+  <div class="container doc-grid">
+    ${docGroup('technical-documents', 'Technical documents', 'Datasheets, installation guidance and technical notes for the steam system components we supply.')}
+    ${docGroup('product-catalogues', 'Product catalogues', 'Catalogues for steam traps, valves and gauges, boiler accessories and condensate recovery equipment.')}
+    ${docGroup('resources', 'Resources', 'Reference material on steam system design, steam trapping and energy efficiency.')}
+  </div>
+</section>
+${ctaBand({ title: 'Need a specific document?', text: 'Tell us the product or topic and we will send the relevant files.' })}`,
+};
+
+const newsPage = {
+  path: '/news.html',
+  title: 'News & Events',
+  description: `News and events from ${company.brand}.`,
+  body: `
+${pageHero({ eyebrow: 'News & Events', title: 'News and events', lead: `Updates from ${company.brand} and the events we take part in.`, crumbs: [{ label: 'News & Events' }] })}
+<section class="section">
+  <div class="container doc-grid doc-grid-2">
+    <section class="doc-group" id="news"><h2>News</h2><p>There are no news posts yet. Updates will be published here.</p></section>
+    <section class="doc-group" id="events"><h2>Events</h2><p>There are no upcoming events listed yet.</p></section>
+  </div>
+</section>
+${ctaBand()}`,
+};
+
+export const pages = [home, about, servicesPage, ...servicePages, industriesPage, productsPage, downloadsPage, newsPage, contact, thankYou, notFound];

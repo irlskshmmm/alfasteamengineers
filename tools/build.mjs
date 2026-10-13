@@ -6,7 +6,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pages } from '../src/pages.mjs';
 import { layout } from '../src/layout.mjs';
-import { company, siteUrl } from '../src/site.config.mjs';
+import { company, siteUrl, nav, products, services } from '../src/site.config.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -16,6 +16,16 @@ for (const page of pages) {
   writeFileSync(out, layout(page));
   console.log('wrote', page.path);
 }
+
+// Client-side search index (used by the header search)
+const index = [
+  ...pages.filter((p) => !p.noindex).map((p) => ({ t: p.title === 'Home' ? `${company.brand} home` : p.title, u: p.path, d: p.description })),
+  ...nav.flatMap((n) => n.children.map((c) => ({ t: c.label, u: c.href, d: `${n.label}` }))),
+  ...products.map((p) => ({ t: p.name, u: `/contact.html?product=${encodeURIComponent(p.name)}#enquiry`, d: p.desc })),
+  ...services.flatMap((sv) => sv.scope.map(([t, d]) => ({ t, u: `/services/${sv.slug}.html`, d: `${sv.title}: ${d}` }))),
+];
+writeFileSync(join(root, 'js/search-index.json'), JSON.stringify(index));
+console.log('wrote /js/search-index.json');
 
 if (siteUrl) {
   const urls = pages.filter((p) => !p.noindex).map((p) => `  <url><loc>${siteUrl}${p.path === '/index.html' ? '/' : p.path}</loc></url>`);

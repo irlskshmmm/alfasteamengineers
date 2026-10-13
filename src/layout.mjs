@@ -1,4 +1,4 @@
-import { company, nav, services, siteUrl } from './site.config.mjs';
+import { company, nav, utilityNav, services, siteUrl } from './site.config.mjs';
 
 export const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -27,6 +27,10 @@ const ICONS = {
   pharma: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 15h9"/>',
   gears: '<circle cx="9" cy="9" r="2.5"/><path d="M9 3v2M9 13v2M3 9h2M13 9h2M4.8 4.8l1.4 1.4M11.8 11.8l1.4 1.4M4.8 13.2l1.4-1.4M11.8 6.2l1.4-1.4"/><circle cx="17" cy="17" r="2"/><path d="M17 13v1.5M17 19.5V21M13 17h1.5M19.5 17H21"/>',
   rig: '<path d="M8 21 12 5l4 16M9.5 15h5M10.5 11h3M6 21h12"/><path d="M12 5V3M15 4c1-1 1-2 0-3 2 1 2.5 2.5 1.5 4"/>',
+  search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  chevron: '<path d="m6 9 6 6 6-6"/>',
+  prev: '<path d="m15 18-6-6 6-6"/>',
+  next: '<path d="m9 18 6-6-6-6"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
   moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
   wrench: '<path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5"/><path d="M14.5 6.5 17 4"/>',
@@ -35,46 +39,73 @@ const ICONS = {
 export const icon = (name, cls = 'icon') =>
   `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 
-export const logo = () => `
-<a class="brand" href="/index.html" aria-label="${esc(company.name)} — home">
-  <img class="brand-mark" src="/images/asecon-mark.webp" alt="${esc(company.brand)}" width="288" height="120">
-  <span class="brand-text"><strong>Alfa Steam Engineers</strong><small>and Consultants Pvt Ltd</small></span>
+export const wordmark = (cls = 'wordmark') => `
+<a class="${cls}" href="/index.html" aria-label="${esc(company.brand)} — ${esc(company.name)}, home">
+  <span class="wm-name" aria-hidden="true"><span class="wm-a">AS</span><span class="wm-b">CON</span></span>
+  <span class="wm-sub" aria-hidden="true">Alfa Steam Engineers<br>&amp; Consultants</span>
 </a>`;
 
-const hasContact = () => company.phone || company.email || company.whatsapp;
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const isActive = (n, current) => (n.match || []).some((m) => (m.endsWith('/') ? current.startsWith(m) : current === m));
 
 function header(current) {
   const items = nav.map((n) => {
-    const active = current === n.href || (n.children === 'services' && current.startsWith('/services')) ? ' aria-current="page"' : '';
-    if (n.children === 'services') {
-      return `<li class="has-sub">
-        <a href="${n.href}"${active}>${n.label}</a>
-        <ul class="sub">${services.map((s) => `<li><a href="/services/${s.slug}.html">${icon(s.icon)}<span>${s.title}</span></a></li>`).join('')}</ul>
+    const id = `menu-${slug(n.label)}`;
+    const active = isActive(n, current) ? ' aria-current="page"' : '';
+    return `
+      <li class="nav-item${active ? ' is-current' : ''}" data-menu>
+        <a class="nav-link" href="${n.href}"${active}>${n.label}</a>
+        <button class="sub-toggle" type="button" aria-expanded="false" aria-controls="${id}" aria-label="${n.label} menu">${icon('chevron')}</button>
+        <div class="dropdown${n.wide ? ' dropdown-wide' : ''}" id="${id}">
+          <ul>${n.children.map((c) => `<li><a href="${c.href}">${esc(c.label)}</a></li>`).join('')}</ul>
+        </div>
       </li>`;
-    }
-    return `<li><a href="${n.href}"${active}>${n.label}</a></li>`;
+  }).join('');
+  const utility = utilityNav.map((u) => u.action === 'search'
+    ? `<li><button type="button" class="utility-link" data-search-open>${icon('search')}<span>${u.label}</span></button></li>`
+    : `<li><a class="utility-link" href="${u.href}">${u.label}</a></li>`).join('');
+  const mobileGroups = nav.map((n) => {
+    const id = `m-${slug(n.label)}`;
+    return `
+      <li class="m-group">
+        <button class="m-head" type="button" aria-expanded="false" aria-controls="${id}">${n.label}${icon('chevron')}</button>
+        <ul class="m-sub" id="${id}" hidden>
+          <li><a href="${n.href}">${n.label} overview</a></li>
+          ${n.children.map((c) => `<li><a href="${c.href}">${esc(c.label)}</a></li>`).join('')}
+        </ul>
+      </li>`;
   }).join('');
   return `
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header" data-header>
-  <div class="container header-inner">
-    ${logo()}
-    <nav class="main-nav" aria-label="Main">
-      <ul>${items}</ul>
-    </nav>
-    <div class="header-cta">
-      ${company.phone ? `<a class="header-phone" href="tel:${esc(company.phoneHref)}">${icon('phone')}<span>${esc(company.phone)}</span></a>` : ''}
-      <a class="btn btn-accent btn-sm" href="/contact.html">Request a Consultation</a>
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <ul class="utility-links">${utility}</ul>
     </div>
+  </div>
+  <div class="container header-inner">
+    ${wordmark()}
+    <nav class="main-nav" aria-label="Main">
+      <ul class="nav-list">${items}</ul>
+    </nav>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu" data-nav-toggle>${icon('menu')}</button>
   </div>
   <div class="mobile-nav" id="mobile-nav" hidden>
-    <ul>
-      ${nav.map((n) => `<li><a href="${n.href}">${n.label}</a>${n.children === 'services' ? `<ul>${services.map((s) => `<li><a href="/services/${s.slug}.html">${s.title}</a></li>`).join('')}</ul>` : ''}</li>`).join('')}
-    </ul>
-    <a class="btn btn-accent" href="/contact.html">Request a Consultation</a>
+    <ul class="m-list">${mobileGroups}</ul>
+    <ul class="m-utility">${utility}</ul>
+    <a class="btn btn-accent" href="/contact.html#enquiry">Request a Consultation</a>
   </div>
-</header>`;
+</header>
+<dialog class="search-dialog" id="site-search" aria-labelledby="search-title">
+  <form class="search-form" role="search" data-search-form>
+    <h2 id="search-title" class="visually-hidden">Search the site</h2>
+    <label class="search-field">${icon('search')}<span class="visually-hidden">Search</span>
+      <input type="search" id="search-input" name="q" placeholder="Search services, industries, products…" autocomplete="off">
+    </label>
+    <button type="button" class="search-close" aria-label="Close search" data-search-close>${icon('close')}</button>
+  </form>
+  <ul class="search-results" id="search-results" aria-live="polite"></ul>
+</dialog>`;
 }
 
 export function contactList(cls = 'contact-list') {
@@ -196,7 +227,7 @@ export function layout({ path, title, description, body, bodyClass = '', noindex
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans+Condensed:wght@400;500;600;700;800&family=Fira+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
   <script src="/js/main.js" defer></script>
   ${ld}
