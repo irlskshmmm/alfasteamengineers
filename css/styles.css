@@ -259,8 +259,8 @@ ul, ol { margin: 0; padding: 0; }
 /* Hero carousel — blurred plant imagery left, brand + message right */
 .hero.hero-carousel { position: relative; min-height: clamp(460px, 58vh, 600px); padding: clamp(3rem, 6vw, 4.5rem) 0; display: flex; align-items: center; background: var(--hero-bg); border-bottom: 0; }
 .hero.hero-carousel::after { display: none; }
-.hero-carousel .hero-video { opacity: 1; filter: blur(1.5px) grayscale(0.3) brightness(0.95); transform: scale(1.02); }
-.hero-carousel .hero-media::after { background: linear-gradient(90deg, rgba(var(--hero-wash), 0.15) 0%, rgba(var(--hero-wash), 0.35) 40%, rgba(var(--hero-wash), 0.88) 56%, rgba(var(--hero-wash), 0.94) 100%); }
+.hero-carousel .hero-video { opacity: 1; filter: saturate(1.05) contrast(1.04); }
+.hero-carousel .hero-media::after { background: linear-gradient(90deg, rgba(var(--hero-wash), 0.04) 0%, rgba(var(--hero-wash), 0.22) 40%, rgba(var(--hero-wash), 0.88) 56%, rgba(var(--hero-wash), 0.94) 100%); }
 .hero-stage { position: relative; z-index: 1; width: min(1200px, 100% - 2.5rem); }
 .hero-content { min-width: 0; margin-left: auto; width: min(620px, 100%); }
 .hero-brand { margin-bottom: 1.6rem; }
@@ -667,7 +667,7 @@ body {
 @media (max-width: 960px) {
   .intro-split, .intro-split-media { grid-template-columns: 1fr; }
   .hero-carousel .hero-media::after { background: linear-gradient(180deg, rgba(var(--hero-wash), 0.45) 0%, rgba(var(--hero-wash), 0.68) 50%, rgba(var(--hero-wash), 0.5) 100%); }
-  .hero-carousel .hero-video { filter: blur(1px) grayscale(0.2) brightness(1); }
+  .hero-carousel .hero-video { filter: saturate(1.05) contrast(1.04); }
   .hero-content { margin: 0 auto; }
   .hero-arrow { top: auto; bottom: 1rem; transform: none; width: 44px; height: 44px; }
   .vm-grid, .doc-grid, .doc-grid-2 { grid-template-columns: 1fr; }

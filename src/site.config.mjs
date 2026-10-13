@@ -29,9 +29,12 @@ export const siteUrl = '';
 // path — prepare it with tools/prepare-hero-video.sh. It is only rendered when
 // the file exists, so the site works without it.
 export const heroVideo = {
+  // Full-HD for desktop/tablet landscape, lighter 1280px copy for phones
+  webmHd: '/videos/hero-power-plant-hd.webm',
+  mp4Hd: '/videos/hero-power-plant-hd.mp4',
   webm: '/videos/hero-power-plant.webm',
   mp4: '/videos/hero-power-plant.mp4',
-  poster: '/videos/hero-power-plant.jpg',
+  poster: '/videos/hero-power-plant-hd.jpg',
   credit: '', // e.g. 'Video: <author> on Pexels' — shown small in the hero corner
 };
 

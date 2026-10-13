@@ -8,6 +8,8 @@ const hasFile = (p) => p && existsSync(root + p.replace(/^\//, ''));
 const heroVideoHtml = () => hasFile(heroVideo.mp4) ? `
   <div class="hero-media" aria-hidden="true">
     <video class="hero-video" autoplay muted loop playsinline preload="metadata"${hasFile(heroVideo.poster) ? ` poster="${heroVideo.poster}"` : ''} data-hero-video>
+      ${hasFile(heroVideo.webmHd) ? `<source src="${heroVideo.webmHd}" type="video/webm" media="(min-width: 961px)">` : ''}
+      ${hasFile(heroVideo.mp4Hd) ? `<source src="${heroVideo.mp4Hd}" type="video/mp4" media="(min-width: 961px)">` : ''}
       ${hasFile(heroVideo.webm) ? `<source src="${heroVideo.webm}" type="video/webm">` : ''}
       <source src="${heroVideo.mp4}" type="video/mp4">
     </video>
