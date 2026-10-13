@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { company, services, industries, products, productCategories, process, heroVideo } from './site.config.mjs';
-import { esc, icon, ctaBand, pageHero, contactList } from './layout.mjs';
+import { esc, icon, ctaBand, pageHero, contactList, steamLoopSvg } from './layout.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const hasFile = (p) => p && existsSync(root + p.replace(/^\//, ''));
@@ -94,6 +94,7 @@ const home = {
 <section class="hero hero-carousel" aria-roledescription="carousel" aria-label="ASCON highlights" data-carousel>
   ${heroVideoHtml()}
   <div class="container hero-stage">
+    <div class="hero-visual hero-diagram">${steamLoopSvg()}</div>
     <div class="hero-content">
       <div class="hero-brand">
         <p class="hero-wordmark"><span class="wm-a">AS</span><span class="wm-b">CON</span></p>
@@ -115,6 +116,41 @@ const home = {
   </div>
   <button type="button" class="hero-arrow hero-prev" aria-label="Previous slide" data-prev><span aria-hidden="true">«</span></button>
   <button type="button" class="hero-arrow hero-next" aria-label="Next slide" data-next><span aria-hidden="true">»</span></button>
+</section>
+
+<section class="section intro-section" aria-labelledby="about-intro-title">
+  <div class="container intro-split">
+    <div class="intro-copy">
+      <h2 id="about-intro-title">About Alfa Steam Engineers</h2>
+      <p>${esc(company.name)} (${esc(company.brand)}) is a mechanical engineering company based in Nagpur, India, specialising in steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy.</p>
+      <p>We help plants generate, distribute and use steam more efficiently and safely, from the boiler house to condensate return, and we supply the components our recommendations call for.</p>
+      <a class="more-link" href="/about.html">Learn More <span class="chev" aria-hidden="true">»</span></a>
+    </div>
+    <figure class="world-map">
+      <div class="map-inner">
+        <img src="/images/world-dots.svg" alt="World map with ASCON's location marked in Nagpur, India" width="1000" height="383" loading="lazy">
+        <span class="map-pin" style="left: 69.19%; top: 42.65%;" aria-hidden="true">
+          <svg viewBox="0 0 24 32"><path d="M12 31s10-11.2 10-19A10 10 0 0 0 2 12c0 7.8 10 19 10 19z"/><circle cx="12" cy="12" r="4"/></svg>
+        </span>
+        <span class="map-label" style="left: 69.19%; top: 42.65%;">Nagpur, India</span>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="section intro-section intro-section-alt" aria-labelledby="industry-intro-title">
+  <div class="container intro-split intro-split-media">
+    <figure class="intro-media">
+      <img src="/images/industry-plant.webp" alt="Aerial view of an operating industrial plant releasing steam" width="1280" height="720" loading="lazy">
+    </figure>
+    <div class="intro-copy">
+      <h2 id="industry-intro-title">Meeting Industry Requirements in India</h2>
+      <p>Steam traps, valves and gauges, boiler accessories and condensate recovery equipment are core components in refineries, power plants and chemical, pharmaceutical, food and manufacturing plants.</p>
+      <p>From Nagpur, ${esc(company.brand)} provides engineering support, industrial audits and component supply to help keep these operations running smoothly.</p>
+      <p>Read about our work for each industry.</p>
+      <a class="more-link" href="/industries.html">Learn More <span class="chev" aria-hidden="true">»</span></a>
+    </div>
+  </div>
 </section>
 
 <section class="section">

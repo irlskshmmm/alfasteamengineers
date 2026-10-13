@@ -255,10 +255,11 @@ ul, ol { margin: 0; padding: 0; }
 /* Hero carousel — blurred plant imagery left, brand + message right */
 .hero.hero-carousel { position: relative; min-height: clamp(460px, 58vh, 600px); padding: clamp(3rem, 6vw, 4.5rem) 0; display: flex; align-items: center; background: var(--hero-bg); border-bottom: 0; }
 .hero.hero-carousel::after { display: none; }
-.hero-carousel .hero-video { opacity: 1; filter: blur(7px) grayscale(0.55) brightness(0.9); transform: scale(1.08); }
-.hero-carousel .hero-media::after { background: linear-gradient(90deg, rgba(var(--hero-wash), 0) 0%, rgba(var(--hero-wash), 0.55) 18%, rgba(var(--hero-wash), 0.94) 38%, rgba(var(--hero-wash), 0.97) 100%); }
-.hero-stage { position: relative; z-index: 1; width: min(1200px, 100% - 2.5rem); }
-.hero-content { margin-left: auto; width: min(620px, 100%); }
+.hero-carousel .hero-video { opacity: 1; filter: blur(1.5px) grayscale(0.3) brightness(0.95); transform: scale(1.02); }
+.hero-carousel .hero-media::after { background: linear-gradient(90deg, rgba(var(--hero-wash), 0.15) 0%, rgba(var(--hero-wash), 0.35) 40%, rgba(var(--hero-wash), 0.88) 56%, rgba(var(--hero-wash), 0.94) 100%); }
+.hero-stage { position: relative; z-index: 1; width: min(1200px, 100% - 2.5rem); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.hero-diagram { box-shadow: 0 24px 50px rgba(3, 30, 70, 0.28); }
+.hero-content { min-width: 0; }
 .hero-brand { margin-bottom: 1.6rem; }
 .hero-wordmark { margin: 0; font: 800 clamp(3.4rem, 7vw, 5.4rem)/0.9 var(--font-cond); letter-spacing: 0.04em; }
 .hero-tagline { margin: 0.35rem 0 0; font: 400 clamp(1.15rem, 2vw, 1.55rem)/1.2 var(--font-cond); color: var(--blue); letter-spacing: 0.01em; }
@@ -284,6 +285,12 @@ ul, ol { margin: 0; padding: 0; }
 .hero-arrow:hover { background: var(--dd-bg); color: #ffffff; border-color: var(--dd-bg); }
 .hero-prev { left: 0; border-left: 0; border-radius: 0 4px 4px 0; }
 .hero-next { right: 0; border-right: 0; border-radius: 4px 0 0 4px; }
+
+@media (max-width: 1360px) and (min-width: 961px) {
+  .hero-arrow { top: auto; bottom: 1.25rem; transform: none; width: 46px; height: 52px; font-size: 2rem; border: 2px solid var(--ink); border-radius: 4px; }
+  .hero-prev { left: auto; right: calc(1.25rem + 56px); }
+  .hero-next { right: 1.25rem; }
+}
 
 /* Steam loop diagram */
 .loop-svg { width: 100%; height: auto; display: block; font-family: var(--mono); --grid-line: rgba(3,76,155,0.06); }
@@ -454,6 +461,32 @@ ul, ol { margin: 0; padding: 0; }
 .values h3 { font-size: 1rem; margin-bottom: 0.2rem; }
 .values p { font-size: 0.93rem; color: var(--ink-3); margin: 0; }
 
+/* Home intro sections: about + world map, industry + photo */
+.intro-section { --heading-navy: #0b3566; }
+:root[data-theme="dark"] .intro-section { --heading-navy: #eef3f9; }
+.intro-section-alt { padding-top: 0; }
+.intro-split { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.intro-split-media { grid-template-columns: 1.05fr 1fr; }
+.intro-copy { min-width: 0; }
+.intro-copy h2 { color: var(--heading-navy); font-size: clamp(1.8rem, 3.2vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.intro-copy p { color: var(--ink-2); max-width: 62ch; }
+.more-link { display: inline-flex; align-items: center; gap: 0.55rem; margin-top: 0.5rem; color: var(--ink); font-weight: 700; text-decoration: none; }
+.more-link .chev { color: var(--blue); font: 700 1.6rem/0.6 var(--font-cond); transition: transform .2s; }
+.more-link:hover { color: var(--blue); }
+.more-link:hover .chev { transform: translateX(4px); }
+.world-map { margin: 0; padding: clamp(1.25rem, 3vw, 2.25rem); background: var(--blue-soft); }
+.map-inner { position: relative; }
+.map-inner img { width: 100%; height: auto; }
+.map-pin { position: absolute; width: 30px; height: 40px; transform: translate(-50%, -100%); filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.3)); }
+.map-pin svg { width: 100%; height: 100%; display: block; }
+.map-pin path { fill: #c8102e; }
+.map-pin circle { fill: #ffffff; }
+.map-pin::after { content: ''; position: absolute; left: 50%; bottom: -5px; width: 14px; height: 6px; margin-left: -7px; border-radius: 50%; background: rgba(200, 16, 46, 0.35); animation: pin-pulse 2s ease-out infinite; z-index: -1; }
+@keyframes pin-pulse { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(3.2); opacity: 0; } }
+.map-label { position: absolute; transform: translate(14px, -38px); padding: 0.2rem 0.55rem; border-radius: 4px; background: var(--surface); color: var(--ink); font: 600 0.78rem/1.3 var(--font-cond); letter-spacing: 0.04em; white-space: nowrap; box-shadow: var(--shadow); }
+.intro-media { margin: 0; }
+.intro-media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+
 /* About: vision & mission, history */
 .vm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 .vm-card { padding: 2rem; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
@@ -566,8 +599,10 @@ body { transition: background-color .25s, color .25s; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 960px) {
+  .intro-split, .intro-split-media { grid-template-columns: 1fr; }
   .hero-carousel .hero-media::after { background: linear-gradient(180deg, rgba(var(--hero-wash), 0.82) 0%, rgba(var(--hero-wash), 0.94) 45%); }
-  .hero-content { margin: 0 auto; }
+  .hero-stage { grid-template-columns: 1fr; }
+  .hero-diagram { order: 2; max-width: 600px; }
   .hero-arrow { top: auto; bottom: 1rem; transform: none; width: 46px; height: 52px; font-size: 2rem; }
   .vm-grid, .doc-grid, .doc-grid-2 { grid-template-columns: 1fr; }
   .hero-media::after { background: linear-gradient(180deg, rgba(var(--wash),0.78) 0%, rgba(var(--wash),0.7) 60%, rgba(var(--wash),0.35) 100%); }
@@ -583,6 +618,7 @@ body { transition: background-color .25s, color .25s; }
 }
 @media (max-width: 640px) {
   .hero-carousel .hero-actions .btn-square { width: 100%; justify-content: center; }
+  .intro-split { gap: 2rem; }
   .hero.hero-carousel { padding-bottom: 5.5rem; }
   .wm-sub { display: none; }
   :root { --header-h: 68px; }

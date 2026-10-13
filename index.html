@@ -156,6 +156,80 @@
   </div>
   
   <div class="container hero-stage">
+    <div class="hero-visual hero-diagram">
+<svg class="loop-svg" viewBox="0 0 600 440" role="img" aria-labelledby="loop-title loop-desc">
+  <title id="loop-title">Steam system schematic</title>
+  <desc id="loop-desc">Boiler generating steam to a distribution header, pressure reducing station and process users, with steam traps returning condensate to the feed tank and back to the boiler.</desc>
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="var(--grid-line)" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="600" height="440" fill="url(#grid)"/>
+
+  <!-- Static pipework -->
+  <g class="pipe">
+    <path d="M110 200V70h460"/>
+    <path d="M330 70v80M480 70v80"/>
+    <path d="M330 230v50M480 230v50"/>
+    <path d="M480 310v20H255v15"/>
+    <path d="M330 310v20"/>
+    <path d="M200 370H120V300"/>
+  </g>
+  <!-- Animated flows -->
+  <path class="flow flow-steam" d="M110 200V70h460"/>
+  <path class="flow flow-steam" d="M330 70v80M480 70v80"/>
+  <path class="flow flow-cond" d="M480 310v20H255v15M330 310v20"/>
+  <path class="flow flow-cond" d="M200 370H120V300"/>
+
+  <!-- Boiler -->
+  <g class="equip">
+    <rect x="40" y="200" width="140" height="100" rx="14"/>
+    <path d="M60 222h100M60 240h100M60 258h100" class="thin"/>
+    <path class="flame" d="M135 288c4-10 10-8 9-16 8 6 10 12 6 18 6-2 8-8 8-8 4 8 0 14-6 16H141c-6-2-8-6-6-10z"/>
+  </g>
+  <text x="60" y="190" class="lbl">BOILER</text>
+
+  <!-- Pressure gauge on main -->
+  <g class="equip"><path d="M180 70v-18"/><circle cx="180" cy="38" r="14"/></g>
+  <path d="M180 38l7-6" class="needle"/>
+  <text x="180" y="16" class="lbl" text-anchor="middle">PG</text>
+
+  <!-- PRV station -->
+  <g class="equip valve"><path d="M240 60v20l20-10zM280 60v20l-20-10z"/><path d="M260 70V50h-8h16"/></g>
+  <text x="260" y="104" class="lbl" text-anchor="middle">PRV</text>
+
+  <!-- Separator -->
+  <g class="equip"><rect x="390" y="56" width="22" height="28" rx="6"/></g>
+  <text x="401" y="104" class="lbl" text-anchor="middle">SEP</text>
+
+  <!-- Process users -->
+  <g class="equip">
+    <rect x="290" y="150" width="80" height="80" rx="10"/>
+    <path d="M300 170c10 8 50-8 60 0M300 190c10 8 50-8 60 0M300 210c10 8 50-8 60 0" class="thin"/>
+    <rect x="440" y="150" width="80" height="80" rx="40"/>
+    <path d="M450 190h60" class="thin"/>
+  </g>
+  <text x="330" y="144" class="lbl" text-anchor="middle">HEAT EXCHANGER</text>
+  <text x="480" y="144" class="lbl" text-anchor="middle">VESSEL</text>
+
+  <!-- Traps -->
+  <g class="equip trap"><circle cx="330" cy="295" r="15"/><circle cx="480" cy="295" r="15"/></g>
+  <text x="330" y="300" class="lbl lbl-t" text-anchor="middle">T</text>
+  <text x="480" y="300" class="lbl lbl-t" text-anchor="middle">T</text>
+  <text x="535" y="300" class="lbl" text-anchor="middle">TRAPS</text>
+
+  <!-- Feed tank + pump -->
+  <g class="equip"><rect x="200" y="345" width="110" height="50" rx="8"/><circle cx="120" cy="370" r="12"/></g>
+  <text x="255" y="374" class="lbl" text-anchor="middle">FEED TANK</text>
+  <text x="102" y="374" class="lbl" text-anchor="end">PUMP</text>
+  <text x="410" y="352" class="lbl lbl-cond" text-anchor="middle">CONDENSATE RETURN</text>
+  <text x="400" y="62" class="lbl lbl-steam" text-anchor="middle" dx="80">STEAM MAIN</text>
+
+  <!-- Legend -->
+  <g transform="translate(40 418)" class="legend">
+    <line x1="0" y1="0" x2="22" y2="0" class="leg-steam"/><text x="30" y="4" class="lbl">STEAM</text>
+    <line x1="100" y1="0" x2="122" y2="0" class="leg-cond"/><text x="130" y="4" class="lbl">CONDENSATE</text>
+  </g>
+</svg></div>
     <div class="hero-content">
       <div class="hero-brand">
         <p class="hero-wordmark"><span class="wm-a">AS</span><span class="wm-b">CON</span></p>
@@ -193,6 +267,41 @@
   </div>
   <button type="button" class="hero-arrow hero-prev" aria-label="Previous slide" data-prev><span aria-hidden="true">«</span></button>
   <button type="button" class="hero-arrow hero-next" aria-label="Next slide" data-next><span aria-hidden="true">»</span></button>
+</section>
+
+<section class="section intro-section" aria-labelledby="about-intro-title">
+  <div class="container intro-split">
+    <div class="intro-copy">
+      <h2 id="about-intro-title">About Alfa Steam Engineers</h2>
+      <p>Alfa Steam Engineers and Consultants Pvt Ltd (ASCON) is a mechanical engineering company based in Nagpur, India, specialising in steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy.</p>
+      <p>We help plants generate, distribute and use steam more efficiently and safely, from the boiler house to condensate return, and we supply the components our recommendations call for.</p>
+      <a class="more-link" href="/about.html">Learn More <span class="chev" aria-hidden="true">»</span></a>
+    </div>
+    <figure class="world-map">
+      <div class="map-inner">
+        <img src="/images/world-dots.svg" alt="World map with ASCON's location marked in Nagpur, India" width="1000" height="383" loading="lazy">
+        <span class="map-pin" style="left: 69.19%; top: 42.65%;" aria-hidden="true">
+          <svg viewBox="0 0 24 32"><path d="M12 31s10-11.2 10-19A10 10 0 0 0 2 12c0 7.8 10 19 10 19z"/><circle cx="12" cy="12" r="4"/></svg>
+        </span>
+        <span class="map-label" style="left: 69.19%; top: 42.65%;">Nagpur, India</span>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="section intro-section intro-section-alt" aria-labelledby="industry-intro-title">
+  <div class="container intro-split intro-split-media">
+    <figure class="intro-media">
+      <img src="/images/industry-plant.webp" alt="Aerial view of an operating industrial plant releasing steam" width="1280" height="720" loading="lazy">
+    </figure>
+    <div class="intro-copy">
+      <h2 id="industry-intro-title">Meeting Industry Requirements in India</h2>
+      <p>Steam traps, valves and gauges, boiler accessories and condensate recovery equipment are core components in refineries, power plants and chemical, pharmaceutical, food and manufacturing plants.</p>
+      <p>From Nagpur, ASCON provides engineering support, industrial audits and component supply to help keep these operations running smoothly.</p>
+      <p>Read about our work for each industry.</p>
+      <a class="more-link" href="/industries.html">Learn More <span class="chev" aria-hidden="true">»</span></a>
+    </div>
+  </div>
 </section>
 
 <section class="section">

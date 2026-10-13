@@ -15,7 +15,7 @@ export const company = {
   whatsapp: '',       // digits only with country code, e.g. '919876543210'
   email: '',          // e.g. 'info@alfasteam.in'
   address: '',        // full postal address, one line
-  city: '',           // e.g. 'Pune, Maharashtra'
+  city: 'Nagpur, Maharashtra, India',
   hours: '',          // e.g. 'Mon–Sat, 9:30 am – 6:30 pm'
   gstin: '',
   cin: '',
