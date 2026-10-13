@@ -6,7 +6,7 @@
 
 export const company = {
   name: 'Alfa Steam Engineers and Consultants Pvt Ltd',
-  brand: 'ASCON',
+  brand: 'ASECON',
   shortName: 'Alfa Steam Engineers and Consultants',
   tagline: 'Steam engineering, boiler systems, audits and energy efficiency consultancy.',
   // Contact details — TO CONFIRM before launch.
@@ -46,7 +46,7 @@ export const utilityNav = [
 export const nav = [
   { label: 'About', href: '/about.html', match: ['/about.html'], children: [
     { label: 'Vision & Mission', href: '/about.html#vision' },
-    { label: 'About ASCON', href: '/about.html#who-we-are' },
+    { label: 'About ASECON', href: '/about.html#who-we-are' },
     { label: 'Company History', href: '/about.html#history' },
   ] },
   { label: 'Industries', href: '/industries.html', match: ['/industries.html'], wide: true, children: [

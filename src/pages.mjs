@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { company, services, industries, products, productCategories, process, heroVideo } from './site.config.mjs';
-import { esc, icon, ctaBand, pageHero, contactList, steamLoopSvg } from './layout.mjs';
+import { esc, icon, ctaBand, pageHero, contactList } from './layout.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const hasFile = (p) => p && existsSync(root + p.replace(/^\//, ''));
@@ -91,14 +91,13 @@ const home = {
   description: `${company.brand} — Alfa Steam Engineers and Consultants Pvt Ltd: steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy for process industries.`,
   bodyClass: 'home',
   body: `
-<section class="hero hero-carousel" aria-roledescription="carousel" aria-label="ASCON highlights" data-carousel>
+<section class="hero hero-carousel" aria-roledescription="carousel" aria-label="${esc(company.brand)} highlights" data-carousel>
   ${heroVideoHtml()}
   <div class="container hero-stage">
-    <div class="hero-visual hero-diagram">${steamLoopSvg()}</div>
     <div class="hero-content">
       <div class="hero-brand">
-        <p class="hero-wordmark"><span class="wm-a">AS</span><span class="wm-b">CON</span></p>
-        <p class="hero-tagline">Alfa Steam Engineers &amp; Consultants</p>
+        <p class="hero-wordmark"><span class="wm-a">ASE</span><span class="wm-b">CON</span></p>
+        <p class="hero-tagline">Alfa Steam Engineers &amp; Consultants Pvt Ltd</p>
       </div>
       <div class="hero-slides" aria-live="off" data-slides>
         ${heroSlides.map((sl, i) => `
@@ -124,11 +123,11 @@ const home = {
       <h2 id="about-intro-title">About Alfa Steam Engineers</h2>
       <p>${esc(company.name)} (${esc(company.brand)}) is a mechanical engineering company based in Nagpur, India, specialising in steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy.</p>
       <p>We help plants generate, distribute and use steam more efficiently and safely, from the boiler house to condensate return, and we supply the components our recommendations call for.</p>
-      <a class="more-link" href="/about.html">More about ASCON ${icon('arrow')}</a>
+      <a class="more-link" href="/about.html">More about ${esc(company.brand)} ${icon('arrow')}</a>
     </div>
     <figure class="world-map">
       <div class="map-inner">
-        <img src="/images/world-dots.svg" alt="World map with ASCON's location marked in Nagpur, India" width="1000" height="383" loading="lazy">
+        <img src="/images/world-dots.svg" alt="World map with ${esc(company.brand)}'s location marked in Nagpur, India" width="1000" height="383" loading="lazy">
         <span class="map-pin" style="left: 69.19%; top: 42.65%;" aria-hidden="true">
           <svg viewBox="0 0 24 32"><path d="M12 31s10-11.2 10-19A10 10 0 0 0 2 12c0 7.8 10 19 10 19z"/><circle cx="12" cy="12" r="4"/></svg>
         </span>

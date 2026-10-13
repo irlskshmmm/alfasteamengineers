@@ -42,7 +42,7 @@ export const icon = (name, cls = 'icon') =>
 export const wordmark = (cls = 'brand-logo') => `
 <a class="${cls}" href="/index.html" aria-label="${esc(company.brand)} — ${esc(company.name)}, home">
   <img src="/images/asecon-mark.webp" alt="" width="288" height="120">
-  <span class="wm-sub" aria-hidden="true">Alfa Steam Engineers<br>&amp; Consultants</span>
+  <span class="wm-sub" aria-hidden="true">Alfa Steam Engineers<br>&amp; Consultants Pvt Ltd</span>
 </a>`;
 
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
