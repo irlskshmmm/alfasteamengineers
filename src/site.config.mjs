@@ -237,3 +237,38 @@ export const process = [
   ['Analysis & report', 'We engineer the solution and present clear, prioritised recommendations.'],
   ['Implementation support', 'Specifications, components, supervision and verification until the result is delivered.'],
 ];
+
+// Abstract industry grid (home + industries page). Each tile links to that industry's
+// entry on the Industries page. Only steam-intensive sectors that ASECON serves are listed.
+export const industryTiles = [
+  { key: 'power', label: 'Energy & Power', anchor: 'power-plants', tone: 'navy', size: 'feature', note: 'Boiler houses, auxiliary steam and condensate systems.' },
+  { key: 'oilgas', label: 'Oil & Gas', anchor: 'oil-gas', tone: 'ocean' },
+  { key: 'chemical', label: 'Chemical Processing', anchor: 'pharmaceuticals-chemicals', tone: 'steel' },
+  { key: 'pharma', label: 'Pharmaceuticals', anchor: 'pharmaceuticals-chemicals', tone: 'mist' },
+  { key: 'food', label: 'Food & Beverage', anchor: 'agro-food-processing', tone: 'slate' },
+  { key: 'paper', label: 'Pulp & Paper', anchor: 'paper-packaging', tone: 'graphite', size: 'wide' },
+  { key: 'manufacturing', label: 'Manufacturing', anchor: 'manufacturing-engineering', tone: 'ocean' },
+  { key: 'textiles', label: 'Textiles', anchor: 'textiles', tone: 'steel' },
+  { key: 'sugar', label: 'Sugar & Distilleries', anchor: 'sugar-distilleries', tone: 'navy', size: 'wide-alt' },
+  { key: 'dairy', label: 'Dairy', anchor: 'dairy', tone: 'mist' },
+];
+
+// Expertise cards — each maps to an existing service page or the products page.
+export const expertise = [
+  { key: 'steam', title: 'Steam System Engineering', href: '/services/steam-engineering.html', tone: 'navy',
+    text: 'Distribution design, line sizing, pressure reduction and steam quality for new and modified networks.' },
+  { key: 'boiler', title: 'Boiler Systems & Engineering', href: '/services/boiler-systems.html', tone: 'ocean',
+    text: 'Boiler selection, auxiliaries, combustion and controls, maintenance support and upgrade studies.' },
+  { key: 'trap', title: 'Steam Trap & Condensate Management', href: '/services/steam-engineering.html', tone: 'steel',
+    text: 'Trap selection and surveys, condensate return and flash steam recovery back to the boiler house.' },
+  { key: 'audit', title: 'Industrial & Energy Audits', href: '/services/industrial-audits.html', tone: 'graphite',
+    text: 'On-site assessment of steam, boiler and utility systems with prioritised, budgetable findings.' },
+  { key: 'efficiency', title: 'Thermal Efficiency Optimisation', href: '/services/energy-efficiency.html', tone: 'slate',
+    text: 'Heat recovery, insulation, combustion tuning and monitoring to cut fuel, steam and water use.' },
+  { key: 'valves', title: 'Valves, Gauges & Steam Components', href: '/products.html', tone: 'navy',
+    text: 'Traps, valves, gauges, instruments and fittings specified and supplied for the duty.' },
+  { key: 'consulting', title: 'Mechanical Engineering Consultancy', href: '/services/engineering-consultancy.html', tone: 'ocean',
+    text: 'Project engineering, technical specifications and independent evaluation of vendor offers.' },
+  { key: 'support', title: 'Troubleshooting & Technical Support', href: '/services/engineering-consultancy.html', tone: 'steel',
+    text: 'Root-cause investigation of water hammer, pressure, capacity and process heating problems.' },
+];

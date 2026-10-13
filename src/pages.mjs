@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { company, services, industries, products, productCategories, process, heroVideo } from './site.config.mjs';
+import { company, services, industries, products, productCategories, process, heroVideo, industryTiles, expertise } from './site.config.mjs';
+import { illustration } from './illustrations.mjs';
 import { esc, icon, ctaBand, pageHero, contactList } from './layout.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -72,6 +73,36 @@ const indFeature = (ind, tag = 'h3') => `
   <${tag} class="h3">${ind.name}</${tag}>
   <p>${ind.note}</p>
 </li>`;
+
+// Abstract industry mosaic — data-driven from industryTiles; `base` is '' on the Industries page itself
+const industryMosaic = (base = '/industries.html') => `
+<ul class="ind-mosaic" role="list">
+  ${industryTiles.map((t, i) => `
+  <li class="mosaic-cell${t.size ? ` cell-${t.size}` : ''}">
+    <a class="ind-tile tone-${t.tone}" href="${base}#${t.anchor}" data-tilt>
+      <span class="tile-no" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+      ${illustration(t.key, 'ill tile-ill')}
+      <span class="tile-text">
+        <span class="tile-label">${esc(t.label)}</span>
+        ${t.note ? `<span class="tile-note">${esc(t.note)}</span>` : ''}
+      </span>
+      <span class="tile-go" aria-hidden="true">${icon('arrow')}</span>
+    </a>
+  </li>`).join('')}
+</ul>`;
+
+const expertiseCards = () => `
+<ul class="xp-grid" role="list">
+  ${expertise.map((x) => `
+  <li class="xp-card">
+    <div class="xp-art tone-${x.tone}" aria-hidden="true">${illustration(x.key, 'ill xp-ill')}</div>
+    <div class="xp-body">
+      <h3><a class="xp-link" href="${x.href}">${esc(x.title)}</a></h3>
+      <p>${esc(x.text)}</p>
+      <span class="xp-more" aria-hidden="true">Explore expertise ${icon('arrow')}</span>
+    </div>
+  </li>`).join('')}
+</ul>`;
 
 const processSteps = () => `
 <ol class="process">
@@ -211,15 +242,28 @@ const home = {
   </div>
 </section>
 
-<section class="section">
+<section class="section mosaic-section" aria-labelledby="mosaic-title">
+  <div class="container">
+    <div class="section-head section-head-row">
+      <div>
+        <p class="eyebrow">Industries we serve</p>
+        <h2 id="mosaic-title">Built for steam-intensive industries</h2>
+        <p>Wherever process heat is generated and distributed as steam, the same engineering decides cost, quality and safety.</p>
+      </div>
+      <a class="btn btn-outline" href="/industries.html">All industries ${icon('arrow')}</a>
+    </div>
+    ${industryMosaic()}
+  </div>
+</section>
+
+<section class="section xp-section" aria-labelledby="xp-title">
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">Industries</p>
-      <h2>Industries that run on steam</h2>
-      <p>Our services apply wherever process heat is generated and distributed as steam.</p>
+      <p class="eyebrow">Engineering expertise</p>
+      <h2 id="xp-title">Expertise across the steam loop</h2>
+      <p>From the boiler house to condensate return, each discipline is backed by site assessment and practical engineering.</p>
     </div>
-    <ul class="ind-feature">${industries.filter((i) => i.featured).map((i) => indFeature(i)).join('')}</ul>
-    <p class="center"><a class="link-arrow" href="/industries.html">See all industries ${icon('arrow')}</a></p>
+    ${expertiseCards()}
   </div>
 </section>
 ${ctaBand()}`,
@@ -361,6 +405,11 @@ const industriesPage = {
   description: 'Steam engineering and boiler consultancy for steam-intensive industries including food, dairy, pharmaceuticals, chemicals, textiles and paper.',
   body: `
 ${pageHero({ eyebrow: 'Industries', title: 'Industries that run on steam', lead: 'Steam is the workhorse of process heating. Wherever it is generated and used, the same engineering principles decide cost, quality and safety.', crumbs: [{ label: 'Industries' }] })}
+<section class="section mosaic-section" aria-label="Industries at a glance">
+  <div class="container">
+    ${industryMosaic('')}
+  </div>
+</section>
 <section class="section">
   <div class="container">
     <ul class="ind-feature ind-feature-lg">${industries.filter((i) => i.featured).map((i) => indFeature(i, 'h2')).join('')}</ul>

@@ -175,6 +175,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Industry tiles: illustration drifts slightly with the cursor (mouse only, not for reduced motion)
+  if (canHover.matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('[data-tilt]').forEach((tile) => {
+      tile.addEventListener('pointermove', (e) => {
+        const r = tile.getBoundingClientRect();
+        tile.style.setProperty('--px', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
+        tile.style.setProperty('--py', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+      });
+      tile.addEventListener('pointerleave', () => { tile.style.removeProperty('--px'); tile.style.removeProperty('--py'); });
+    });
+  }
+
   // Hero video: never play for reduced-motion users; pause when off-screen
   const heroVideo = document.querySelector('[data-hero-video]');
   if (heroVideo) {
