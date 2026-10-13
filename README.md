@@ -1,54 +1,67 @@
 # ASECON — Alfa Steam Engineers and Consultants Pvt Ltd — website
 
-Static corporate website for ASECON (Alfa Steam Engineers and Consultants Pvt Ltd): steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy.
+Corporate website for ASECON (Alfa Steam Engineers and Consultants Pvt Ltd): steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy. It includes a product and service enquiry system with an Excel-compatible lead register.
 
-Plain HTML, CSS and JavaScript — no framework, no runtime dependencies, no build step needed to deploy. The generated HTML pages are committed at the repository root, so the site is served exactly as checked in.
+- **Website:** a static multi-page site. Pages are generated from `src/` by a small Node script and bundled by **Vite** into `dist/`.
+- **Enquiry server** (`server/`): Node.js 22. It accepts enquiries, stores them in SQLite, maintains the Excel register, can sync to Microsoft 365 Excel or Google Sheets, and serves the staff dashboard at `/admin/`.
+
+**Setup on Windows, hosting, environment variables, Excel/Google connection and custom-domain DNS: see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).**
+
+## Quick start
+
+Requires Node.js 22.13+.
+
+```sh
+npm install
+npm run dev          # http://localhost:5173
+npm run build        # production build → dist/
+npm run preview      # serve dist/ on http://localhost:4173
+```
+
+Enquiry server (separate terminal):
+
+```sh
+cd server
+npm install
+cp .env.example .env # then set ADMIN_USERNAME, ADMIN_PASSWORD_HASH, ALLOWED_ORIGINS…
+npm run dev          # http://localhost:8787, dashboard at /admin/
+npm test
+```
 
 ## Structure
 
 ```
-index.html, about.html, services.html, industries.html,
-products.html, contact.html, thank-you.html, 404.html   ← generated pages
-services/*.html                                         ← generated service pages
-css/styles.css                                          ← all styles
-js/main.js                                              ← navigation, filters, enquiry form
-images/                                                 ← ASECON logo (asecon-*), favicon, OG image, optimised product images (WebP)
-src/site.config.mjs                                     ← company details + all page content data
-src/layout.mjs, src/pages.mjs                           ← page templates
-tools/build.mjs                                         ← regenerates the HTML from src/
-products/                                               ← original product images (kept as source files)
-assets/, legacy/                                        ← previous site build, kept for reference (not used)
+src/site.config.mjs        ← company details and all page content (services, industries, products…)
+src/enquiry-options.mjs    ← enquiry form choices: industries, products/services, units, timelines, statuses
+src/layout.mjs, pages.mjs  ← page templates; enquiry-form.mjs ← the one reusable enquiry form + modal
+tools/build.mjs            ← generates the .html pages, js/search-index.json and server/src/enquiry-options.json
+*.html, services/*.html    ← generated pages (committed, so the repository root is also a deployable site)
+css/styles.css             ← all styles
+js/main.js                 ← navigation, search, hero, filters, theme
+js/enquiry.js              ← enquiry modal and form: prefill, validation, submission, states
+vite.config.mjs            ← multi-page Vite build into dist/
+server/                    ← enquiry API, database, Excel register, sync, email, admin dashboard
+tests/enquiry.e2e.mjs      ← browser test of the enquiry flow and dashboard
+images/, videos/           ← site images (WebP), logo, hero video
+products/, assets/, legacy/← original source images and the previous site build, kept for reference
 ```
 
 ## Editing content
 
-1. Edit `src/site.config.mjs` — company contact details, services, industries, components.
-2. Regenerate the pages (Node 18+, no install needed):
+1. Edit `src/site.config.mjs` (company contact details, services, industries, products) or `src/enquiry-options.mjs` (enquiry form choices).
+2. Run `npm run generate`. `dev` and `build` also do this.
+3. Commit the regenerated `.html` files together with the `src/` change.
 
-   ```sh
-   node tools/build.mjs
-   ```
+Contact fields left empty (`''`) are hidden on the site, and the build prints which ones are still missing. Setting `siteUrl` enables canonical URLs and generates `sitemap.xml`.
 
-3. Commit the regenerated `.html` files.
+## Enquiries
 
-Contact fields left empty (`''`) are hidden on the site; the build prints which ones are still missing. Setting `siteUrl` also enables canonical URLs and generates `sitemap.xml`.
+Every "Enquire", "Request a quote" and "Request a consultation" button opens the same enquiry form in a modal. On the Contact page the form appears inline. Links pre-fill the product or service.
 
-Styling changes go directly in `css/styles.css`; behaviour in `js/main.js` (no rebuild needed for those).
-
-## Local preview
-
-From the repository root:
-
-```sh
-python3 -m http.server 8000     # or: npx serve .
-```
-
-Open http://localhost:8000. Links are root-relative, so serve from the repository root rather than opening files directly.
-
-## Enquiry form
-
-The contact form is set up for **Netlify Forms** (`data-netlify="true"`, form name `enquiry`, honeypot spam field). On a Netlify deploy with form detection enabled, submissions appear under *Forms* in the Netlify dashboard, where email notifications can be configured. When previewed locally there is no form backend, so the form shows its "could not be sent" message — that is expected.
+- With `ENQUIRY_API_URL` set at build time, the form submits to the enquiry server. The visitor sees a reference number (e.g. `ASE-20261013-0007`) only after the server has saved the enquiry.
+- Staff work from the dashboard at `https://<enquiry-server>/admin/`: search and filter, update status and internal remarks, and export `.xlsx`. The server also keeps `ASECON-Enquiry-Register.xlsx` in its data folder up to date, and can mirror every enquiry into a Microsoft 365 Excel table or a Google Sheet.
+- Without `ENQUIRY_API_URL`, the form falls back to Netlify Forms (`ENQUIRY_FALLBACK=netlify`, the default, which works only on Netlify) or shows an error (`ENQUIRY_FALLBACK=none`). It never shows a false success.
 
 ## Product images
 
-`images/products/*.webp` are resized, optimised copies of the files in `products/`. Some source images show third-party brand markings (e.g. `steam-traps.png`); confirm usage rights before launch or replace with your own photographs.
+`images/products/*.webp` are resized, optimised copies of the files in `products/`. Some source images show third-party brand markings (e.g. `steam-traps.png`). Confirm usage rights before launch, or replace them with your own photographs.

@@ -4,9 +4,12 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pages } from '../src/pages.mjs';
-import { layout } from '../src/layout.mjs';
-import { company, siteUrl, nav, products, services } from '../src/site.config.mjs';
+// Optional .env (e.g. ENQUIRY_API_URL) — loaded before the site config is read
+try { process.loadEnvFile(new URL('../.env', import.meta.url)); } catch { /* no .env file */ }
+const { pages } = await import('../src/pages.mjs');
+const { layout } = await import('../src/layout.mjs');
+const { company, siteUrl, nav, products, services } = await import('../src/site.config.mjs');
+const { enquiryOptions } = await import('../src/enquiry-options.mjs');
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -26,6 +29,10 @@ const index = [
 ];
 writeFileSync(join(root, 'js/search-index.json'), JSON.stringify(index));
 console.log('wrote /js/search-index.json');
+
+// Enquiry form choice lists for the backend's server-side validation (keeps form and server in step)
+writeFileSync(join(root, 'server/src/enquiry-options.json'), `${JSON.stringify(enquiryOptions, null, 2)}\n`);
+console.log('wrote /server/src/enquiry-options.json');
 
 if (siteUrl) {
   const urls = pages.filter((p) => !p.noindex).map((p) => `  <url><loc>${siteUrl}${p.path === '/index.html' ? '/' : p.path}</loc></url>`);

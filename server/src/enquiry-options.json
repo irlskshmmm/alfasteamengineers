@@ -1,0 +1,117 @@
+{
+  "industries": [
+    "Power Plants",
+    "Agro & Food Processing",
+    "Pharmaceuticals & Chemicals",
+    "Manufacturing & Engineering",
+    "Oil & Gas",
+    "Dairy",
+    "Textiles",
+    "Paper & Packaging",
+    "Sugar & Distilleries",
+    "Rubber & Tyre",
+    "Hospitals & Hospitality",
+    "Edible Oil & Solvent Extraction",
+    "Other"
+  ],
+  "requirementGroups": [
+    {
+      "label": "Steam & Condensate",
+      "kind": "product",
+      "options": [
+        "Steam Traps",
+        "Ball Float Steam Traps",
+        "Strainers & Screens",
+        "Condensate Recovery Equipment"
+      ]
+    },
+    {
+      "label": "Valves",
+      "kind": "product",
+      "options": [
+        "Globe Valves",
+        "Control Valves",
+        "Ball Valves",
+        "Butterfly Valves",
+        "Solenoid Valves"
+      ]
+    },
+    {
+      "label": "Instrumentation",
+      "kind": "product",
+      "options": [
+        "Pressure Gauges",
+        "Temperature Sensors",
+        "Thermocouples & RTD Probes",
+        "Level & Float Switches",
+        "Water Meters"
+      ]
+    },
+    {
+      "label": "Boiler & Piping",
+      "kind": "product",
+      "options": [
+        "Boiler Tubes",
+        "Flanges",
+        "Gaskets",
+        "Mechanical Seals",
+        "Boiler Accessories",
+        "Pipes & Fittings"
+      ]
+    },
+    {
+      "label": "Panels & Electricals",
+      "kind": "product",
+      "options": [
+        "Control Panels",
+        "MCBs & Protection",
+        "Contactors",
+        "Power & Control Cables"
+      ]
+    },
+    {
+      "label": "Engineering services",
+      "kind": "service",
+      "options": [
+        "Steam Engineering",
+        "Boiler Systems",
+        "Industrial Audits",
+        "Energy Efficiency",
+        "Engineering Consultancy",
+        "Technical Support & Troubleshooting"
+      ]
+    },
+    {
+      "label": "Other",
+      "kind": "other",
+      "options": [
+        "Other product",
+        "Other service"
+      ]
+    }
+  ],
+  "units": [
+    "Pieces",
+    "Sets",
+    "Metres",
+    "Kilograms",
+    "Lots",
+    "Other"
+  ],
+  "timelines": [
+    "Urgent (within 1 week)",
+    "Within 2 weeks",
+    "Within 1 month",
+    "1–3 months",
+    "More than 3 months",
+    "Not decided yet"
+  ],
+  "statuses": [
+    "New",
+    "Contacted",
+    "Quotation Sent",
+    "Won",
+    "Lost",
+    "Closed"
+  ]
+}

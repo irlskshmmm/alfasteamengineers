@@ -1,4 +1,5 @@
-import { company, nav, utilityNav, services, siteUrl } from './site.config.mjs';
+import { company, nav, utilityNav, services, siteUrl, enquiryApiUrl, enquiryFallback } from './site.config.mjs';
+import { enquiryModal } from './enquiry-form.mjs';
 
 export const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -126,7 +127,7 @@ function footer() {
     <div class="footer-brand">
       <a href="/index.html" class="footer-logo"><img src="/images/asecon-logo-640.webp" alt="${esc(company.brand)} — ${esc(company.name)}" width="640" height="318" loading="lazy"></a>
       <p>${esc(company.tagline)}</p>
-      <a class="btn btn-outline btn-sm" href="/contact.html">Send an enquiry ${icon('arrow')}</a>
+      <a class="btn btn-outline btn-sm" href="/contact.html#enquiry">Send an enquiry ${icon('arrow')}</a>
     </div>
     <div>
       <h2 class="footer-h">Services</h2>
@@ -156,7 +157,7 @@ ${company.whatsapp ? `<a class="wa-float" href="https://wa.me/${esc(company.what
 }
 
 export function ctaBand({ title = 'Have a steam system challenge?', text = 'Tell us about your plant. An engineer will review your enquiry and get back to you with next steps.', service = '' } = {}) {
-  const href = service ? `/contact.html?service=${service}` : '/contact.html';
+  const href = service ? `/contact.html?service=${service}#enquiry` : '/contact.html#enquiry';
   return `
 <section class="cta-band">
   <div class="container cta-inner">
@@ -229,7 +230,10 @@ export function layout({ path, title, description, body, bodyClass = '', noindex
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans+Condensed:wght@400;500;600;700;800&family=Fira+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
-  <script src="/js/main.js" defer></script>
+  <meta name="asecon-enquiry-api" content="${esc(enquiryApiUrl)}">
+  <meta name="asecon-enquiry-fallback" content="${enquiryFallback}">
+  <script type="module" src="/js/main.js"></script>
+  <script type="module" src="/js/enquiry.js"></script>
   ${ld}
 </head>
 <body class="${bodyClass}">
@@ -238,6 +242,7 @@ ${header(path)}
 ${body}
 </main>
 ${footer()}
+${enquiryModal()}
 </body>
 </html>
 `;

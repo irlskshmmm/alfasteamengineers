@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { company, services, industries, products, productCategories, process, heroVideo, industryTiles, expertise } from './site.config.mjs';
 import { illustration } from './illustrations.mjs';
 import { esc, icon, ctaBand, pageHero, contactList } from './layout.mjs';
+import { enquiryForm } from './enquiry-form.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const hasFile = (p) => p && existsSync(root + p.replace(/^\//, ''));
@@ -63,7 +64,7 @@ const productCard = (p) => `
     <p class="prod-cat">${productCategories.find((c) => c.key === p.cat).label}</p>
     <h3>${p.name}</h3>
     <p>${p.desc}</p>
-    <a class="link-arrow" href="/contact.html?product=${encodeURIComponent(p.name)}">Enquire ${icon('arrow')}</a>
+    <a class="link-arrow" href="/contact.html?product=${encodeURIComponent(p.name)}#enquiry" aria-label="Enquire about ${esc(p.name)}">Enquire ${icon('arrow')}</a>
   </div>
 </article>`;
 
@@ -377,7 +378,7 @@ ${pageHero({ eyebrow: 'Service', title: s.title, lead: s.short, crumbs: [{ label
       <div class="aside-card">
         <h2 class="h4">What you receive</h2>
         <ul class="checks">${s.deliverables.map((x) => `<li>${icon('doc')}<span>${x}</span></li>`).join('')}</ul>
-        <a class="btn btn-accent btn-block" href="/contact.html?service=${s.slug}">Enquire about ${s.title}</a>
+        <a class="btn btn-accent btn-block" href="/contact.html?service=${s.slug}#enquiry">Enquire about ${s.title}</a>
       </div>
       <div class="aside-card aside-nav">
         <h2 class="h4">Other services</h2>
@@ -415,7 +416,7 @@ ${pageHero({ eyebrow: 'Industries', title: 'Industries that run on steam', lead:
     <ul class="ind-feature ind-feature-lg">${industries.filter((i) => i.featured).map((i) => indFeature(i, 'h2')).join('')}</ul>
     <h2 class="sub-h">Also serving</h2>
     <ul class="ind-grid">${industries.filter((i) => !i.featured).map((ind) => `<li class="reveal" id="${slugify(ind.name)}"><h3>${ind.name}</h3><p>${ind.note}</p></li>`).join('')}</ul>
-    <p class="note">Don’t see your industry? If your plant uses steam or thermal utilities, <a href="/contact.html">tell us about it</a>.</p>
+    <p class="note">Don’t see your industry? If your plant uses steam or thermal utilities, <a href="/contact.html#enquiry">tell us about it</a>.</p>
   </div>
 </section>
 ${ctaBand()}`,
@@ -438,7 +439,7 @@ ${pageHero({ eyebrow: 'Components', title: 'Steam system components', lead: 'Val
     <div class="note-card">
       <h2 class="h4">Need a specific size, rating or make?</h2>
       <p>Send us your specification, datasheet or a photo of the existing item. Sizes, pressure ratings, materials and makes are confirmed against each enquiry.</p>
-      <a class="btn btn-primary" href="/contact.html?service=components">Send a component enquiry ${icon('arrow')}</a>
+      <a class="btn btn-primary" href="/contact.html?service=components#enquiry">Request a quote ${icon('arrow')}</a>
     </div>
   </div>
 </section>
@@ -455,33 +456,8 @@ const contact = {
 ${pageHero({ eyebrow: 'Contact', title: 'Request a consultation', lead: 'Tell us about your plant and requirement. The more detail you share, the more useful our first response will be.', crumbs: [{ label: 'Contact' }] })}
 <section class="section">
   <div class="container contact-grid">
-    <form class="enquiry" id="enquiry" name="enquiry" method="POST" action="/thank-you.html" data-netlify="true" netlify-honeypot="bot-field" data-enquiry-form novalidate>
-      <input type="hidden" name="form-name" value="enquiry">
-      <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-      <div class="form-grid">
-        <div class="field"><label for="f-name">Full name <span aria-hidden="true">*</span></label><input id="f-name" name="name" autocomplete="name" required></div>
-        <div class="field"><label for="f-company">Company <span aria-hidden="true">*</span></label><input id="f-company" name="company" autocomplete="organization" required></div>
-        <div class="field"><label for="f-email">Email <span aria-hidden="true">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
-        <div class="field"><label for="f-phone">Phone <span aria-hidden="true">*</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>
-        <div class="field"><label for="f-location">Plant location</label><input id="f-location" name="location" placeholder="City, State"></div>
-        <div class="field"><label for="f-service">Service required</label>
-          <select id="f-service" name="service">
-            <option value="">Select a service</option>
-            ${serviceOptions.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}
-          </select>
-        </div>
-        <div class="field field-full"><label for="f-system">System details <span class="opt">(optional)</span></label><input id="f-system" name="system" placeholder="e.g. boiler type and capacity, steam pressure, fuel"></div>
-        <div class="field field-full"><label for="f-message">Your requirement <span aria-hidden="true">*</span></label><textarea id="f-message" name="message" rows="5" required></textarea></div>
-      </div>
-      <p class="form-error" role="alert" hidden data-form-error></p>
-      <button class="btn btn-accent btn-lg" type="submit">Send Enquiry ${icon('arrow')}</button>
-      <p class="small muted">Fields marked * are required. We use your details only to respond to this enquiry.</p>
-    </form>
-    <div class="form-success" hidden data-form-success tabindex="-1">
-      <span class="success-icon">${icon('check')}</span>
-      <h2>Thank you — your enquiry has been sent.</h2>
-      <p>One of our engineers will review your requirement and get back to you.</p>
-      <a class="btn btn-outline" href="/services.html">Browse our services</a>
+    <div class="enquiry-inline" id="enquiry">
+      ${enquiryForm('c', { inline: true })}
     </div>
     <aside class="contact-aside">
       <div class="aside-card aside-dark">

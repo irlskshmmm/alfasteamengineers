@@ -580,6 +580,46 @@ body { transition: background-color .25s, color .25s; }
 .wa-float { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 40; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: #1f9d55; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 .wa-float .icon { width: 26px; height: 26px; }
 
+/* ===== Enquiry form & modal ===== */
+html.em-open { overflow: hidden; }
+.enquiry-modal { width: min(880px, calc(100% - 2rem)); max-height: min(92vh, 980px); padding: 0; border: 1px solid var(--glass-edge); border-radius: 14px; background: var(--surface); color: var(--ink-2); box-shadow: 0 30px 80px rgba(3, 20, 45, 0.35); overflow: hidden; }
+.enquiry-modal[open] { display: flex; flex-direction: column; animation: em-in .22s ease-out; }
+.enquiry-modal::backdrop { background: rgba(7, 17, 27, 0.55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+@keyframes em-in { from { opacity: 0; transform: translateY(12px) scale(0.985); } to { opacity: 1; transform: none; } }
+.em-head { position: relative; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.5rem 1rem; border-bottom: 1px solid var(--line); }
+.em-head::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--brand-gradient); }
+.em-head .eyebrow { margin-bottom: 0.35rem; }
+.em-head h2 { margin: 0; font-size: clamp(1.25rem, 2.4vw, 1.6rem); }
+.em-context { margin: 0.35rem 0 0; font-weight: 600; color: var(--blue); }
+.em-close { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--ink); cursor: pointer; }
+.em-close:hover { background: var(--blue-soft); }
+.em-close .icon { width: 20px; height: 20px; }
+.em-body { overflow-y: auto; padding: 1.25rem 1.5rem 1.5rem; overscroll-behavior: contain; }
+.enquiry-inline { position: relative; padding: clamp(1.5rem, 3vw, 2.25rem); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--glass-strong); box-shadow: var(--shadow); scroll-margin-top: 110px; }
+.enquiry-inline::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; border-radius: 16px 16px 0 0; background: var(--brand-gradient); }
+.ef-group { margin: 0 0 1.4rem; padding: 0; border: 0; min-width: 0; }
+.ef-group legend { margin-bottom: 0.85rem; padding: 0; font: 600 0.8rem/1 var(--font-cond); letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); }
+.enquiry-form .form-grid { margin-bottom: 0; }
+.enquiry-form .field[hidden] { display: none; }
+.field-hint { margin: 0; font-size: 0.82rem; color: var(--ink-3); }
+.field select { appearance: auto; }
+.form-banner { margin: 0 0 1.1rem; padding: 0.8rem 1rem; border-radius: 8px; border-left: 4px solid var(--err-line); background: var(--err-bg); color: var(--err-fg); font-size: 0.95rem; }
+.service-note { display: flex; gap: 0.5rem; align-items: flex-start; margin: 1rem 0 0; padding: 0.7rem 0.9rem; border-radius: 8px; background: var(--blue-tint); color: var(--ink-2); font-size: 0.92rem; }
+.service-note .icon { color: var(--blue); margin-top: 0.15rem; }
+.ef-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; }
+.ef-actions .small { margin: 0; }
+.enquiry-form [data-submit][aria-busy="true"] { cursor: progress; opacity: 0.85; }
+.enquiry-form [data-submit][aria-busy="true"] .icon { animation: spin 0.9s linear infinite; }
+.enquiry-form.is-busy .ef-group { opacity: 0.7; pointer-events: none; }
+.enquiry-success { padding: 2rem 0.5rem; text-align: center; }
+.enquiry-success:focus { outline: none; }
+.enquiry-success .ref { font-family: var(--mono); color: var(--blue); letter-spacing: 0.04em; }
+@media (max-width: 640px) {
+  .enquiry-modal { width: 100%; max-width: 100%; height: 100%; max-height: 100%; margin: 0; border-radius: 0; border: 0; }
+  .em-head, .em-body { padding-left: 1rem; padding-right: 1rem; }
+  .ef-actions .btn { width: 100%; justify-content: center; }
+}
+
 /* ===== Industry mosaic & expertise cards (original ASECON line art) ===== */
 .tone-navy { --tile: #0b2545; }
 .tone-ocean { --tile: #034c9b; }

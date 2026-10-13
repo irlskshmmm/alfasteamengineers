@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ASECON Enquiry Register</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+  <script src="/admin/admin.js" defer></script>
+</head>
+<body>
+  <header class="bar">
+    <div class="brand"><strong>ASE<span>CON</span></strong> Enquiry Register</div>
+    <div class="bar-right" id="who" hidden>
+      <span id="user"></span>
+      <button type="button" class="btn ghost" id="logout">Sign out</button>
+    </div>
+  </header>
+
+  <main id="login-view" class="login" hidden>
+    <form id="login-form" class="card" novalidate>
+      <h1>Sign in</h1>
+      <p class="muted">Authorised ASECON staff only.</p>
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <p class="error" id="login-error" role="alert" hidden></p>
+      <button type="submit" class="btn">Sign in</button>
+    </form>
+  </main>
+
+  <main id="app-view" hidden>
+    <section class="notices" id="notices" aria-live="polite"></section>
+
+    <section class="stats" aria-label="Summary">
+      <div class="stat"><span id="s-total">0</span><small>Total enquiries</small></div>
+      <div class="stat stat-new"><span id="s-new">0</span><small>New — need follow-up</small></div>
+      <div class="stat"><span id="s-sync">—</span><small>Spreadsheet sync</small></div>
+      <div class="stat"><span id="s-notify">—</span><small>Email alerts</small></div>
+    </section>
+
+    <form id="filters" class="filters card" role="search">
+      <div class="f f-wide"><label for="f-q">Search</label><input id="f-q" name="q" placeholder="ID, name, company, email, product…"></div>
+      <div class="f"><label for="f-company">Company</label><input id="f-company" name="company"></div>
+      <div class="f"><label for="f-industry">Industry</label><select id="f-industry" name="industry"><option value="">All</option></select></div>
+      <div class="f"><label for="f-product">Product / service</label><select id="f-product" name="product"><option value="">All</option></select></div>
+      <div class="f"><label for="f-status">Status</label><select id="f-status" name="status"><option value="">All</option></select></div>
+      <div class="f"><label for="f-from">From</label><input id="f-from" name="from" type="date"></div>
+      <div class="f"><label for="f-to">To</label><input id="f-to" name="to" type="date"></div>
+      <div class="f-actions">
+        <button type="submit" class="btn">Apply</button>
+        <button type="reset" class="btn ghost">Clear</button>
+        <a class="btn ghost" id="export" href="/admin/api/export.xlsx">Export .xlsx</a>
+        <button type="button" class="btn ghost" id="retry-sync" hidden>Retry spreadsheet sync</button>
+      </div>
+    </form>
+
+    <section class="card table-wrap">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Submitted</th><th>Company</th><th>Contact</th><th>Industry</th><th>Product / service</th><th>Qty</th><th>Status</th><th>Sheet</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="muted empty" id="empty" hidden>No enquiries match these filters.</p>
+    </section>
+  </main>
+
+  <dialog id="detail" aria-labelledby="d-title">
+    <form method="dialog" class="d-head">
+      <h2 id="d-title">Enquiry</h2>
+      <button class="btn ghost" aria-label="Close">✕</button>
+    </form>
+    <dl id="d-fields" class="fields"></dl>
+    <form id="d-form" class="d-form">
+      <label for="d-status">Status</label>
+      <select id="d-status" name="status"></select>
+      <label for="d-remarks">Internal remarks</label>
+      <textarea id="d-remarks" name="remarks" rows="4" maxlength="2000"></textarea>
+      <p class="error" id="d-error" role="alert" hidden></p>
+      <div class="d-actions"><button type="submit" class="btn">Save</button><span class="muted" id="d-saved" aria-live="polite"></span></div>
+    </form>
+  </dialog>
+</body>
+</html>

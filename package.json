@@ -1,0 +1,21 @@
+{
+  "name": "asecon-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "ASECON (Alfa Steam Engineers and Consultants Pvt Ltd) corporate website — static multi-page site built with Vite; enquiry backend in server/.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "generate": "node tools/build.mjs",
+    "dev": "node tools/build.mjs && vite",
+    "build": "node tools/build.mjs && vite build",
+    "preview": "vite preview",
+    "test:server": "npm --prefix server test",
+    "test:e2e": "node tests/enquiry.e2e.mjs"
+  },
+  "devDependencies": {
+    "vite": "5.4.21"
+  }
+}

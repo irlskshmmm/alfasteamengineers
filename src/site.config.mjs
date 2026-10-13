@@ -25,6 +25,14 @@ export const company = {
 // Used for canonical links, Open Graph URLs and sitemap.xml. Leave '' to skip.
 export const siteUrl = '';
 
+// Base URL of the enquiry backend (server/), e.g. https://enquiries.your-domain.com
+// Set ENQUIRY_API_URL in the environment or a .env file before running the build. It is a public URL, not a secret.
+// When empty, the form falls back to Netlify Forms (on Netlify) and never pretends to succeed elsewhere.
+export const enquiryApiUrl = (globalThis.process?.env?.ENQUIRY_API_URL || '').replace(/\/$/, '');
+// Used only when ENQUIRY_API_URL is empty: 'netlify' submits to Netlify Forms (site hosted on Netlify);
+// set ENQUIRY_FALLBACK=none on any other host so the form never claims success without a backend.
+export const enquiryFallback = (globalThis.process?.env?.ENQUIRY_FALLBACK ?? 'netlify') === 'netlify' ? 'netlify' : '';
+
 // Hero background video (muted, looping, low opacity). Put the clip at this
 // path — prepare it with tools/prepare-hero-video.sh. It is only rendered when
 // the file exists, so the site works without it.
@@ -76,7 +84,7 @@ export const nav = [
     { label: 'Technical Consultancy', href: '/services/engineering-consultancy.html' },
     { label: 'Industrial Audits', href: '/services/industrial-audits.html' },
     { label: 'Engineering Support', href: '/services/steam-engineering.html' },
-    { label: 'Product Assistance', href: '/contact.html?service=components' },
+    { label: 'Product Assistance', href: '/contact.html?service=components#enquiry' },
   ] },
   { label: 'Downloads', href: '/downloads.html', match: ['/downloads.html'], children: [
     { label: 'Technical Documents', href: '/downloads.html#technical-documents' },

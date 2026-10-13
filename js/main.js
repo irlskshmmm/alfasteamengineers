@@ -111,7 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let index = null;
     const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     // Index URLs are root-relative; resolve them against wherever main.js was loaded from
-    const base = document.querySelector('script[src$="js/main.js"]').getAttribute('src').replace(/js\/main\.js$/, '');
+    // (a sub-folder preview). After a Vite build the script is renamed, so fall back to the site root.
+    const base = document.querySelector('script[src$="js/main.js"]')?.getAttribute('src').replace(/js\/main\.js$/, '') || '/';
     const href = (u) => (base === '/' ? u : base + u.slice(1));
     const render = () => {
       const q = input.value.trim().toLowerCase();
@@ -230,83 +231,5 @@ document.addEventListener('DOMContentLoaded', () => {
     fromHash();
     window.addEventListener('hashchange', fromHash);
   }
-
-  // Enquiry form: prefill from query string, validate, submit via Netlify Forms
-  const form = document.querySelector('[data-enquiry-form]');
-  if (form) {
-    const params = new URLSearchParams(location.search);
-    const service = params.get('service');
-    const product = params.get('product');
-    const select = form.querySelector('[name="service"]');
-    if (service && select && select.querySelector(`option[value="${CSS.escape(service)}"]`)) select.value = service;
-    if (product) {
-      if (select) select.value = 'components';
-      const msg = form.querySelector('[name="message"]');
-      if (msg && !msg.value) msg.value = `Enquiry for: ${product}\n\nSize / rating / quantity: `;
-    }
-
-    const errorBox = form.querySelector('[data-form-error]');
-    const success = document.querySelector('[data-form-success]');
-
-    const validateField = (input) => {
-      const field = input.closest('.field');
-      let msg = '';
-      if (input.required && !input.value.trim()) msg = 'This field is required.';
-      else if (input.type === 'email' && input.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) msg = 'Please enter a valid email address.';
-      else if (input.type === 'tel' && input.value && input.value.replace(/\D/g, '').length < 7) msg = 'Please enter a valid phone number.';
-      field.classList.toggle('invalid', !!msg);
-      input.setAttribute('aria-invalid', String(!!msg));
-      let note = field.querySelector('.field-msg');
-      if (msg) {
-        if (!note) {
-          note = document.createElement('span');
-          note.className = 'field-msg';
-          note.id = `${input.id}-msg`;
-          field.appendChild(note);
-          input.setAttribute('aria-describedby', note.id);
-        }
-        note.textContent = msg;
-      } else if (note) {
-        note.remove();
-        input.removeAttribute('aria-describedby');
-      }
-      return !msg;
-    };
-
-    form.querySelectorAll('input[required], textarea[required], input[type="email"], input[type="tel"]').forEach((input) => {
-      input.addEventListener('blur', () => validateField(input));
-      // Clear errors while typing so the layout doesn't shift under a pending click
-      input.addEventListener('input', () => { if (input.closest('.field').classList.contains('invalid')) validateField(input); });
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      errorBox.hidden = true;
-      const inputs = [...form.querySelectorAll('.field input, .field textarea')];
-      const results = inputs.map(validateField);
-      if (results.includes(false)) {
-        const first = inputs[results.indexOf(false)];
-        first.focus();
-        return;
-      }
-      const button = form.querySelector('[type="submit"]');
-      button.disabled = true;
-      try {
-        const res = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(form)).toString(),
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        form.hidden = true;
-        success.hidden = false;
-        success.focus();
-      } catch (err) {
-        errorBox.textContent = 'Sorry — your enquiry could not be sent right now. Please try again in a moment, or contact us directly using the details on this page.';
-        errorBox.hidden = false;
-      } finally {
-        button.disabled = false;
-      }
-    });
-  }
+  // Enquiry forms (modal + contact page) are handled by js/enquiry.js
 });

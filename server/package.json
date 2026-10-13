@@ -1,0 +1,19 @@
+{
+  "name": "asecon-enquiry-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ASECON enquiry API, lead register (SQLite + Excel) and admin dashboard",
+  "type": "module",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/index.mjs",
+    "dev": "node --watch --env-file-if-exists=.env src/index.mjs",
+    "test": "node --test --test-concurrency=1 \"test/*.test.mjs\"",
+    "hash-password": "node scripts/hash-password.mjs",
+    "make-template": "node scripts/make-template.mjs"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "nodemailer": "^6.10.1"
+  }
+}
