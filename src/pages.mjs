@@ -106,7 +106,7 @@ const home = {
           ${i === 0 ? `<h1>${sl.title}</h1>` : `<h2 class="hero-title">${sl.title}</h2>`}
           <p class="lead">${esc(sl.text)}</p>
           <div class="hero-actions">
-            <a class="btn btn-square" href="${sl.primary[1]}">${sl.primary[0]} <span class="chev" aria-hidden="true">»</span></a>
+            <a class="btn btn-hero" href="${sl.primary[1]}">${sl.primary[0]} ${icon('arrow')}</a>
             <a class="hero-link" href="${sl.secondary[1]}">${sl.secondary[0]} ${icon('arrow')}</a>
           </div>
         </div>`).join('')}
@@ -114,8 +114,8 @@ const home = {
       <div class="hero-dots">${heroSlides.map((sl, i) => `<button type="button" class="hero-dot" aria-label="Show slide ${i + 1}: ${esc(sl.label)}"${i === 0 ? ' aria-current="true"' : ''} data-dot="${i}"></button>`).join('')}</div>
     </div>
   </div>
-  <button type="button" class="hero-arrow hero-prev" aria-label="Previous slide" data-prev><span aria-hidden="true">«</span></button>
-  <button type="button" class="hero-arrow hero-next" aria-label="Next slide" data-next><span aria-hidden="true">»</span></button>
+  <button type="button" class="hero-arrow hero-prev" aria-label="Previous slide" data-prev>${icon('prev')}</button>
+  <button type="button" class="hero-arrow hero-next" aria-label="Next slide" data-next>${icon('next')}</button>
 </section>
 
 <section class="section intro-section" aria-labelledby="about-intro-title">
@@ -124,7 +124,7 @@ const home = {
       <h2 id="about-intro-title">About Alfa Steam Engineers</h2>
       <p>${esc(company.name)} (${esc(company.brand)}) is a mechanical engineering company based in Nagpur, India, specialising in steam engineering, boiler systems, industrial audits, energy efficiency and engineering consultancy.</p>
       <p>We help plants generate, distribute and use steam more efficiently and safely, from the boiler house to condensate return, and we supply the components our recommendations call for.</p>
-      <a class="more-link" href="/about.html">Learn More <span class="chev" aria-hidden="true">»</span></a>
+      <a class="more-link" href="/about.html">More about ASCON ${icon('arrow')}</a>
     </div>
     <figure class="world-map">
       <div class="map-inner">
@@ -148,7 +148,7 @@ const home = {
       <p>Steam traps, valves and gauges, boiler accessories and condensate recovery equipment are core components in refineries, power plants and chemical, pharmaceutical, food and manufacturing plants.</p>
       <p>From Nagpur, ${esc(company.brand)} provides engineering support, industrial audits and component supply to help keep these operations running smoothly.</p>
       <p>Read about our work for each industry.</p>
-      <a class="more-link" href="/industries.html">Learn More <span class="chev" aria-hidden="true">»</span></a>
+      <a class="more-link" href="/industries.html">Explore industries ${icon('arrow')}</a>
     </div>
   </div>
 </section>
